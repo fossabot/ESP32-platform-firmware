@@ -5,8 +5,8 @@
 #include "compositor.h"
 #include "color.h"
 
-#define HUB75_WIDTH CONFIG_HUB75_WIDTH
-#define HUB75_HEIGHT CONFIG_HUB75_HEIGHT
+#define HUB75_WIDTH       CONFIG_HUB75_WIDTH
+#define HUB75_HEIGHT      CONFIG_HUB75_HEIGHT
 #define HUB75_BUFFER_SIZE HUB75_WIDTH *HUB75_HEIGHT * sizeof(Color)
 
 esp_err_t driver_hub75_init(void);

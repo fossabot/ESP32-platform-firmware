@@ -22,19 +22,19 @@
 #include "png_reader.h"
 
 /* Flags */
-#define FB_FLAG_FORCE 1
-#define FB_FLAG_FULL 2
+#define FB_FLAG_FORCE         1
+#define FB_FLAG_FULL          2
 #define FB_FLAG_LUT_GREYSCALE 4
-#define FB_FLAG_LUT_NORMAL 8
-#define FB_FLAG_LUT_FAST 16
-#define FB_FLAG_LUT_FASTEST 32
+#define FB_FLAG_LUT_NORMAL    8
+#define FB_FLAG_LUT_FAST      16
+#define FB_FLAG_LUT_FASTEST   32
 
 /* Colors */
 #define COLOR_BLACK 0x000000
 #define COLOR_WHITE 0xFFFFFF
-#define COLOR_RED 0xFF0000
+#define COLOR_RED   0xFF0000
 #define COLOR_GREEN 0x00FF00
-#define COLOR_BLUE 0x0000FF
+#define COLOR_BLUE  0x0000FF
 
 esp_err_t driver_framebuffer_init();
 /* Initialize the framebuffer driver (called once at system boot from

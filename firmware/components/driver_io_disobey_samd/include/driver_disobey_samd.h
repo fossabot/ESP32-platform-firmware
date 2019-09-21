@@ -5,17 +5,17 @@
 #include <stdint.h>
 #include <esp_err.h>
 
-#define DISOBEY_SAMD_BUTTON_LEFT 0
-#define DISOBEY_SAMD_BUTTON_UP 1
-#define DISOBEY_SAMD_BUTTON_BACK 2
-#define DISOBEY_SAMD_BUTTON_OK 3
-#define DISOBEY_SAMD_BUTTON_DOWN 4
+#define DISOBEY_SAMD_BUTTON_LEFT  0
+#define DISOBEY_SAMD_BUTTON_UP    1
+#define DISOBEY_SAMD_BUTTON_BACK  2
+#define DISOBEY_SAMD_BUTTON_OK    3
+#define DISOBEY_SAMD_BUTTON_DOWN  4
 #define DISOBEY_SAMD_BUTTON_RIGHT 5
 
-#define disobey_samd_CMD_LED 0x01
+#define disobey_samd_CMD_LED       0x01
 #define disobey_samd_CMD_BACKLIGHT 0x02
-#define disobey_samd_CMD_BUZZER 0x03
-#define disobey_samd_CMD_OFF 0x04
+#define disobey_samd_CMD_BUZZER    0x03
+#define disobey_samd_CMD_OFF       0x04
 
 __BEGIN_DECLS
 

@@ -66,17 +66,9 @@ const char *fontNames[] = {
     "7x5"                    // CAMPZONE2019
 };
 const GFXfont *fontPointers[] = {
-    &org_018pt7b,
-    &fairlight8pt7b,
-    &fairlight12pt7b,
-    &dejavusans20pt7b,
-    &permanentmarker22pt7b,
-    &permanentmarker36pt7b,
-    &robotoblack22pt7b,
-    &robotoblackitalic24pt7b,
-    &roboto12pt7b,
-    &roboto18pt7b,
-    &roboto22pt7b,
+    &org_018pt7b, &fairlight8pt7b, &fairlight12pt7b, &dejavusans20pt7b,
+    &permanentmarker22pt7b, &permanentmarker36pt7b, &robotoblack22pt7b,
+    &robotoblackitalic24pt7b, &roboto12pt7b, &roboto18pt7b, &roboto22pt7b,
     &weather42pt8b,
     &roboto12pt7b,  // Replaced pixelade13 with something that actually looks
                     // nice.

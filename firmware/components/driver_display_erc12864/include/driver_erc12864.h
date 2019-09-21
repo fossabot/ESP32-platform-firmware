@@ -5,8 +5,8 @@
 #include <stdint.h>
 #include <esp_err.h>
 
-#define ERC12864_WIDTH 128
-#define ERC12864_HEIGHT 64
+#define ERC12864_WIDTH       128
+#define ERC12864_HEIGHT      64
 #define ERC12864_BUFFER_SIZE (ERC12864_WIDTH * ERC12864_HEIGHT) / 8
 
 __BEGIN_DECLS

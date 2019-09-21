@@ -17,8 +17,8 @@
 
 /* E-INK display as used on the SHA2017 and HackerHotel 2019 badges */
 #if defined(CONFIG_DRIVER_EINK_ENABLE)
-#define FB_SIZE EINK_BUFFER_SIZE
-#define FB_WIDTH DRIVER_EINK_WIDTH
+#define FB_SIZE   EINK_BUFFER_SIZE
+#define FB_WIDTH  DRIVER_EINK_WIDTH
 #define FB_HEIGHT DRIVER_EINK_HEIGHT
 #ifdef CONFIG_DRIVER_EINK_FORCE_1BPP
 #define FB_TYPE_1BPP
@@ -34,14 +34,14 @@
 #define FB_FLUSH(buffer, eink_flags, x0, y0, x1, y1) \
   driver_eink_display(buffer, eink_flags);
 //#define FB_FLUSH(buffer,eink_flags,x0,y0,x1,y1)
-//driver_eink_display_part(buffer,eink_flags,x0,x1); //Doesn't work.
+// driver_eink_display_part(buffer,eink_flags,x0,x1); //Doesn't work.
 #define COLOR_FILL_DEFAULT 0xFFFFFF
 #define COLOR_TEXT_DEFAULT 0x000000
 
 /* E-INK display as used on the OHS badge */
 #elif defined(CONFIG_DRIVER_GXGDE0213B1_ENABLE)
-#define FB_SIZE GXGDE0213B1_BUFFER_SIZE
-#define FB_WIDTH GXGDE0213B1_WIDTH
+#define FB_SIZE   GXGDE0213B1_BUFFER_SIZE
+#define FB_WIDTH  GXGDE0213B1_WIDTH
 #define FB_HEIGHT GXGDE0213B1_HEIGHT
 #define FB_TYPE_1BPP
 #define FB_1BPP_OHS
@@ -52,8 +52,8 @@
 
 /* OLED display as used on the Disobey 2020 badge */
 #elif defined(CONFIG_DRIVER_SSD1306_ENABLE)
-#define FB_SIZE SSD1306_BUFFER_SIZE
-#define FB_WIDTH SSD1306_WIDTH
+#define FB_SIZE   SSD1306_BUFFER_SIZE
+#define FB_WIDTH  SSD1306_WIDTH
 #define FB_HEIGHT SSD1306_HEIGHT
 #define FB_TYPE_1BPP
 #define FB_1BPP_VERT2
@@ -64,8 +64,8 @@
 
 /* LCD display as used on the Disobey 2019 badge */
 #elif defined(CONFIG_DRIVER_ERC12864_ENABLE)
-#define FB_SIZE ERC12864_BUFFER_SIZE
-#define FB_WIDTH ERC12864_WIDTH
+#define FB_SIZE   ERC12864_BUFFER_SIZE
+#define FB_WIDTH  ERC12864_WIDTH
 #define FB_HEIGHT ERC12864_HEIGHT
 #define FB_TYPE_1BPP
 #define FB_1BPP_VERT
@@ -76,8 +76,8 @@
 
 /* LCD display as used on the Espressif Wrover kit */
 #elif defined(CONFIG_DRIVER_ILI9341_ENABLE)
-#define FB_SIZE ILI9341_BUFFER_SIZE
-#define FB_WIDTH ILI9341_WIDTH
+#define FB_SIZE   ILI9341_BUFFER_SIZE
+#define FB_WIDTH  ILI9341_WIDTH
 #define FB_HEIGHT ILI9341_HEIGHT
 #define FB_TYPE_16BPP
 #define FB_ALPHA_ENABLED
@@ -88,8 +88,8 @@
 
 /* HUB75 led matrix */
 #elif defined(CONFIG_DRIVER_HUB75_ENABLE)
-#define FB_SIZE HUB75_BUFFER_SIZE
-#define FB_WIDTH HUB75_WIDTH
+#define FB_SIZE   HUB75_BUFFER_SIZE
+#define FB_WIDTH  HUB75_WIDTH
 #define FB_HEIGHT HUB75_HEIGHT
 #define FB_TYPE_32BPP
 #define FB_ALPHA_ENABLED
@@ -100,13 +100,13 @@
 
 /* FRI3D 2018 led matrix */
 #elif CONFIG_DRIVER_FRI3D_ENABLE
-#define FB_SIZE FRI3D_BUFFER_SIZE
-#define FB_WIDTH FRI3D_WIDTH
+#define FB_SIZE   FRI3D_BUFFER_SIZE
+#define FB_WIDTH  FRI3D_WIDTH
 #define FB_HEIGHT FRI3D_HEIGHT
 #define FB_TYPE_8BPP
 #define FB_FLUSH(buffer, eink_flags, x0, y0, x1, y1) driver_fri3d_write(buffer);
-#define COLOR_FILL_DEFAULT 0x000000
-#define COLOR_TEXT_DEFAULT 0xFFFFFF
+#define COLOR_FILL_DEFAULT                           0x000000
+#define COLOR_TEXT_DEFAULT                           0xFFFFFF
 #else
 #error "Framebuffer driver enabled without a target display available!"
 #endif

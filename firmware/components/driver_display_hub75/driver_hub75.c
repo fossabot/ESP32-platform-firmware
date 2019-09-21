@@ -43,7 +43,7 @@
 #define BIT_C (1 << 5)  // connected to GPIO19 here
 
 #define BIT_LAT (1 << 6)  // connected to GPIO26 here
-#define BIT_OE (1 << 7)   // connected to GPIO25 here
+#define BIT_OE  (1 << 7)  // connected to GPIO25 here
 
 int brightness           = CONFIG_HUB75_DEFAULT_BRIGHTNESS;
 int framerate            = 20;
@@ -155,8 +155,8 @@ esp_err_t driver_hub75_init(void) {
   }
 
   // Do binary time division setup. Essentially, we need n of plane 0, 2n of
-  // plane 1, 4n of plane 2 etc, but that needs to be divided evenly over time to
-  // stop flicker from happening. This little bit of code tries to do that
+  // plane 1, 4n of plane 2 etc, but that needs to be divided evenly over time
+  // to stop flicker from happening. This little bit of code tries to do that
   // more-or-less elegantly.
   int times[BITPLANE_CNT] = {0};
   for (int i = 0; i < ((1 << BITPLANE_CNT) - 1); i++) {

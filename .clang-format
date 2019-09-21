@@ -1,6 +1,7 @@
 ﻿---
 BasedOnStyle: Chromium
 AlignConsecutiveAssignments: 'true'
+AlignConsecutiveMacros: 'true'
 AlignOperands: 'true'
 AllowShortBlocksOnASingleLine: 'false'
 AllowShortFunctionsOnASingleLine: Empty

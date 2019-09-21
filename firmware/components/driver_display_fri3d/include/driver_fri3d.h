@@ -5,8 +5,8 @@
 #include <stdint.h>
 #include <esp_err.h>
 
-#define FRI3D_WIDTH 14
-#define FRI3D_HEIGHT 5
+#define FRI3D_WIDTH       14
+#define FRI3D_HEIGHT      5
 #define FRI3D_BUFFER_SIZE FRI3D_WIDTH *FRI3D_HEIGHT
 
 __BEGIN_DECLS

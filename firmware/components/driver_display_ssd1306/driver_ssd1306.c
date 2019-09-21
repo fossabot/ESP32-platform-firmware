@@ -215,7 +215,7 @@ esp_err_t driver_ssd1306_init(void) {
     return res;
 
   uint8_t buffer[1024] = {0};
-  res = driver_ssd1306_write(buffer);  // Clear screen
+  res                  = driver_ssd1306_write(buffer);  // Clear screen
   if (res != ESP_OK)
     return res;
 

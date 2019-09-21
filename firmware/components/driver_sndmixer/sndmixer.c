@@ -17,8 +17,8 @@
 #ifdef CONFIG_DRIVER_SNDMIXER_ENABLE
 
 #define CHFL_EVICTABLE (1 << 0)
-#define CHFL_PAUSED (1 << 1)
-#define CHFL_LOOP (1 << 2)
+#define CHFL_PAUSED    (1 << 1)
+#define CHFL_LOOP      (1 << 2)
 
 typedef enum {
   CMD_QUEUE_WAV = 1,

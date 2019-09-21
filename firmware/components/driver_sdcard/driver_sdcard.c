@@ -25,10 +25,10 @@
 // NOT be changed!)
 #define SDMMC_HOST_PIN_CMD 15
 #define SDMMC_HOST_PIN_CLK 14
-#define SDMMC_HOST_PIN_D0 2
-#define SDMMC_HOST_PIN_D1 4
-#define SDMMC_HOST_PIN_D2 12
-#define SDMMC_HOST_PIN_D3 13
+#define SDMMC_HOST_PIN_D0  2
+#define SDMMC_HOST_PIN_D1  4
+#define SDMMC_HOST_PIN_D2  12
+#define SDMMC_HOST_PIN_D3  13
 
 static bool sdcard_is_mounted = false;
 
