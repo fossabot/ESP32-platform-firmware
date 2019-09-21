@@ -7,9 +7,9 @@
 
 #include <stdint.h>
 
-typedef union{
-    uint32_t value;
-    uint8_t RGB[4];
+typedef union {
+  uint32_t value;
+  uint8_t RGB[4];
 } Color;
 
-#endif //NEW_ESP32_FIRMWARE_COLOR_H
+#endif  // NEW_ESP32_FIRMWARE_COLOR_H

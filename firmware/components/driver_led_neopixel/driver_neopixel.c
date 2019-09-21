@@ -21,203 +21,200 @@ static const char *TAG = "neopixel";
 
 static spi_device_handle_t driver_leds_spi = NULL;
 
-static esp_err_t driver_neopixel_release_spi(void); // forward declaration
+static esp_err_t driver_neopixel_release_spi(void);  // forward declaration
 
-static esp_err_t driver_neopixel_claim_spi(void)
-{
-	// already claimed?
-	if (driver_leds_spi != NULL) return ESP_OK;
+static esp_err_t driver_neopixel_claim_spi(void) {
+  // already claimed?
+  if (driver_leds_spi != NULL)
+    return ESP_OK;
 
-	ESP_LOGI(TAG, "claiming VSPI bus");
-	driver_vspi_release_and_claim(driver_neopixel_release_spi);
+  ESP_LOGI(TAG, "claiming VSPI bus");
+  driver_vspi_release_and_claim(driver_neopixel_release_spi);
 
-	// (re)initialize leds SPI
-	static const spi_bus_config_t buscfg = {
-		.mosi_io_num   = CONFIG_NEOPIXEL_PIN,
-		.miso_io_num   = -1,  // -1 = unused
-		.sclk_io_num   = -1,  // -1 = unused
-		.quadwp_io_num = -1,  // -1 = unused
-		.quadhd_io_num = -1,  // -1 = unused
-	};
-	esp_err_t res = spi_bus_initialize(VSPI_HOST, &buscfg, 1);
-	if (res != ESP_OK)
-		return res;
+  // (re)initialize leds SPI
+  static const spi_bus_config_t buscfg = {
+      .mosi_io_num   = CONFIG_NEOPIXEL_PIN,
+      .miso_io_num   = -1,  // -1 = unused
+      .sclk_io_num   = -1,  // -1 = unused
+      .quadwp_io_num = -1,  // -1 = unused
+      .quadhd_io_num = -1,  // -1 = unused
+  };
+  esp_err_t res = spi_bus_initialize(VSPI_HOST, &buscfg, 1);
+  if (res != ESP_OK)
+    return res;
 
-	static const spi_device_interface_config_t devcfg = {
-		.clock_speed_hz = 3200000, // 3.2 Mhz
-		.mode           = 0,
-		.spics_io_num   = -1,
-		.queue_size     = 1,
-	};
-	res = spi_bus_add_device(VSPI_HOST, &devcfg, &driver_leds_spi);
-	if (res != ESP_OK)
-		return res;
+  static const spi_device_interface_config_t devcfg = {
+      .clock_speed_hz = 3200000,  // 3.2 Mhz
+      .mode           = 0,
+      .spics_io_num   = -1,
+      .queue_size     = 1,
+  };
+  res = spi_bus_add_device(VSPI_HOST, &devcfg, &driver_leds_spi);
+  if (res != ESP_OK)
+    return res;
 
-	ESP_LOGI(TAG, "claiming VSPI bus: done");
-	return ESP_OK;
+  ESP_LOGI(TAG, "claiming VSPI bus: done");
+  return ESP_OK;
 }
 
-static esp_err_t driver_neopixel_release_spi(void)
-{
-	ESP_LOGI(TAG, "releasing VSPI bus");
-	esp_err_t res = spi_bus_remove_device(driver_leds_spi);
-	if (res != ESP_OK)
-		return res;
+static esp_err_t driver_neopixel_release_spi(void) {
+  ESP_LOGI(TAG, "releasing VSPI bus");
+  esp_err_t res = spi_bus_remove_device(driver_leds_spi);
+  if (res != ESP_OK)
+    return res;
 
-	driver_leds_spi = NULL;
+  driver_leds_spi = NULL;
 
-	res = spi_bus_free(VSPI_HOST);
-	if (res != ESP_OK)
-		return res;
+  res = spi_bus_free(VSPI_HOST);
+  if (res != ESP_OK)
+    return res;
 
-	driver_vspi_freed();
+  driver_vspi_freed();
 
-	ESP_LOGI(TAG, "releasing VSPI bus: done");
-	return ESP_OK;
+  ESP_LOGI(TAG, "releasing VSPI bus: done");
+  return ESP_OK;
 }
 
 static bool driver_neopixel_active = false;
 
-esp_err_t driver_neopixel_enable(void)
-{
-	// return if we are already enabled and initialized
-	if (driver_neopixel_active) return ESP_OK;
+esp_err_t driver_neopixel_enable(void) {
+  // return if we are already enabled and initialized
+  if (driver_neopixel_active)
+    return ESP_OK;
 
-	#ifdef CONFIG_DRIVER_NEOPIXEL_MPR121_PIN
-		driver_mpr121_set_gpio_level(CONFIG_DRIVER_NEOPIXEL_MPR121_PIN, true); //Enable power
-	#endif
+#ifdef CONFIG_DRIVER_NEOPIXEL_MPR121_PIN
+  driver_mpr121_set_gpio_level(CONFIG_DRIVER_NEOPIXEL_MPR121_PIN,
+                               true);  // Enable power
+#endif
 
-	esp_err_t res = driver_neopixel_claim_spi();
-	if (res != ESP_OK)
-		return res;
+  esp_err_t res = driver_neopixel_claim_spi();
+  if (res != ESP_OK)
+    return res;
 
-	driver_neopixel_active = true;
+  driver_neopixel_active = true;
 
-	return ESP_OK;
+  return ESP_OK;
 }
 
-esp_err_t driver_neopixel_disable(void)
-{
-	// return if we are not enabled
-	if (!driver_neopixel_active)
-		return ESP_OK;
+esp_err_t driver_neopixel_disable(void) {
+  // return if we are not enabled
+  if (!driver_neopixel_active)
+    return ESP_OK;
 
-	if (driver_leds_spi != NULL) {
-		esp_err_t res = driver_vspi_release_and_claim(NULL);
-		if (res != ESP_OK)
-			return res;
-	}
+  if (driver_leds_spi != NULL) {
+    esp_err_t res = driver_vspi_release_and_claim(NULL);
+    if (res != ESP_OK)
+      return res;
+  }
 
-	driver_neopixel_active = false;
+  driver_neopixel_active = false;
 
-	// configure CONFIG_NEOPIXEL_PIN as high-impedance
-	gpio_config_t io_conf = {
-		.intr_type    = GPIO_INTR_DISABLE,
-		.mode         = GPIO_MODE_INPUT,
-		.pin_bit_mask = 1LL << CONFIG_NEOPIXEL_PIN,
-		.pull_down_en = 0,
-		.pull_up_en   = 0,
-	};
-	esp_err_t res = gpio_config(&io_conf);
-	if (res != ESP_OK)
-		return res;
+  // configure CONFIG_NEOPIXEL_PIN as high-impedance
+  gpio_config_t io_conf = {
+      .intr_type    = GPIO_INTR_DISABLE,
+      .mode         = GPIO_MODE_INPUT,
+      .pin_bit_mask = 1LL << CONFIG_NEOPIXEL_PIN,
+      .pull_down_en = 0,
+      .pull_up_en   = 0,
+  };
+  esp_err_t res = gpio_config(&io_conf);
+  if (res != ESP_OK)
+    return res;
 
-	/*res = badge_power_leds_disable();
-	if (res != ESP_OK)
-		return res;*/
+  /*res = badge_power_leds_disable();
+  if (res != ESP_OK)
+          return res;*/
 
-	return ESP_OK;
+  return ESP_OK;
 }
 
 uint8_t *driver_neopixel_buf = NULL;
-int driver_neopixel_buf_len = 0;
+int driver_neopixel_buf_len  = 0;
 
-esp_err_t driver_neopixel_send_data(uint8_t *data, int len)
-{
-	static const uint8_t conv[4] = { 0x11, 0x13, 0x31, 0x33 };
+esp_err_t driver_neopixel_send_data(uint8_t *data, int len) {
+  static const uint8_t conv[4] = {0x11, 0x13, 0x31, 0x33};
 
-	if (driver_neopixel_buf_len < len * 4 + 3)
-	{
-		if (driver_neopixel_buf != NULL)
-			free(driver_neopixel_buf);
-		driver_neopixel_buf_len = 0;
-		driver_neopixel_buf = malloc(len * 4 + 3);
-		if (driver_neopixel_buf == NULL)
-			return ESP_ERR_NO_MEM;
-	}
+  if (driver_neopixel_buf_len < len * 4 + 3) {
+    if (driver_neopixel_buf != NULL)
+      free(driver_neopixel_buf);
+    driver_neopixel_buf_len = 0;
+    driver_neopixel_buf     = malloc(len * 4 + 3);
+    if (driver_neopixel_buf == NULL)
+      return ESP_ERR_NO_MEM;
+  }
 
-	esp_err_t res = driver_neopixel_enable();
-	if (res != 0)
-		return res;
+  esp_err_t res = driver_neopixel_enable();
+  if (res != 0)
+    return res;
 
-	// 3 * 24 us 'reset'
-	int pos=0;
-	driver_neopixel_buf[pos++] = 0;
-	driver_neopixel_buf[pos++] = 0;
-	driver_neopixel_buf[pos++] = 0;
+  // 3 * 24 us 'reset'
+  int pos                    = 0;
+  driver_neopixel_buf[pos++] = 0;
+  driver_neopixel_buf[pos++] = 0;
+  driver_neopixel_buf[pos++] = 0;
 
-	int i;
-	for (i=0; i<len; i++)
-	{
-		int v = data[i];
-		driver_neopixel_buf[pos++] = conv[(v>>6)&3];
-		driver_neopixel_buf[pos++] = conv[(v>>4)&3];
-		driver_neopixel_buf[pos++] = conv[(v>>2)&3];
-		driver_neopixel_buf[pos++] = conv[(v>>0)&3];
-	}
+  int i;
+  for (i = 0; i < len; i++) {
+    int v                      = data[i];
+    driver_neopixel_buf[pos++] = conv[(v >> 6) & 3];
+    driver_neopixel_buf[pos++] = conv[(v >> 4) & 3];
+    driver_neopixel_buf[pos++] = conv[(v >> 2) & 3];
+    driver_neopixel_buf[pos++] = conv[(v >> 0) & 3];
+  }
 
-	spi_transaction_t t;
-	memset(&t, 0, sizeof(t));
-	t.length = pos*8;
-	t.tx_buffer = driver_neopixel_buf;
+  spi_transaction_t t;
+  memset(&t, 0, sizeof(t));
+  t.length    = pos * 8;
+  t.tx_buffer = driver_neopixel_buf;
 
-	res = driver_neopixel_claim_spi();
-	if (res != ESP_OK)
-		return res;
+  res = driver_neopixel_claim_spi();
+  if (res != ESP_OK)
+    return res;
 
-	res = spi_device_transmit(driver_leds_spi, &t);
-	if (res != ESP_OK)
-		return res;
+  res = spi_device_transmit(driver_leds_spi, &t);
+  if (res != ESP_OK)
+    return res;
 
-	return ESP_OK;
+  return ESP_OK;
 }
 
-esp_err_t driver_neopixel_init(void)
-{
-	static bool driver_neopixel_init_done = false;
+esp_err_t driver_neopixel_init(void) {
+  static bool driver_neopixel_init_done = false;
 
-	if (driver_neopixel_init_done)
-		return ESP_OK;
+  if (driver_neopixel_init_done)
+    return ESP_OK;
 
-	ESP_LOGD(TAG, "init called");
+  ESP_LOGD(TAG, "init called");
 
-	// initialize VSPI sharing
-	driver_vspi_init();
+  // initialize VSPI sharing
+  driver_vspi_init();
 
-	// depending on badge_power
-	/*esp_err_t res = badge_power_init();
-	if (res != ESP_OK)
-		return res;*/
+  // depending on badge_power
+  /*esp_err_t res = badge_power_init();
+  if (res != ESP_OK)
+          return res;*/
 
-	// configure CONFIG_NEOPIXEL_PIN as high-impedance
-	gpio_config_t io_conf = {
-		.intr_type    = GPIO_INTR_DISABLE,
-		.mode         = GPIO_MODE_INPUT,
-		.pin_bit_mask = 1LL << CONFIG_NEOPIXEL_PIN,
-		.pull_down_en = 0,
-		.pull_up_en   = 0,
-	};
-	esp_err_t res = gpio_config(&io_conf);
-	if (res != ESP_OK)
-		return res;
+  // configure CONFIG_NEOPIXEL_PIN as high-impedance
+  gpio_config_t io_conf = {
+      .intr_type    = GPIO_INTR_DISABLE,
+      .mode         = GPIO_MODE_INPUT,
+      .pin_bit_mask = 1LL << CONFIG_NEOPIXEL_PIN,
+      .pull_down_en = 0,
+      .pull_up_en   = 0,
+  };
+  esp_err_t res = gpio_config(&io_conf);
+  if (res != ESP_OK)
+    return res;
 
-	driver_neopixel_init_done = true;
+  driver_neopixel_init_done = true;
 
-	ESP_LOGD(TAG, "init done");
+  ESP_LOGD(TAG, "init done");
 
-	return ESP_OK;
+  return ESP_OK;
 }
 
 #else
-esp_err_t driver_neopixel_init(void) { return ESP_OK; } //Dummy function.
-#endif // CONFIG_DRIVER_NEOPIXEL_ENABLE
+esp_err_t driver_neopixel_init(void) {
+  return ESP_OK;
+}  // Dummy function.
+#endif  // CONFIG_DRIVER_NEOPIXEL_ENABLE

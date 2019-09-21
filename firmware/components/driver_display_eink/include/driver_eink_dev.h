@@ -57,51 +57,55 @@ extern void driver_eink_dev_write_byte(uint8_t data);
 extern void driver_eink_dev_write_command(uint8_t command);
 
 /** helper method: write command with 1 parameter */
-static inline void driver_eink_dev_write_command_p1(uint8_t command, uint8_t para1)
-{
-	driver_eink_dev_write_command(command);
-	driver_eink_dev_write_byte(para1);
+static inline void driver_eink_dev_write_command_p1(uint8_t command,
+                                                    uint8_t para1) {
+  driver_eink_dev_write_command(command);
+  driver_eink_dev_write_byte(para1);
 }
 
 /** helper method: write command with 2 parameters */
-static inline void driver_eink_dev_write_command_p2(uint8_t command, uint8_t para1,
-									  uint8_t para2)
-{
-	driver_eink_dev_write_command(command);
-	driver_eink_dev_write_byte(para1);
-	driver_eink_dev_write_byte(para2);
+static inline void driver_eink_dev_write_command_p2(uint8_t command,
+                                                    uint8_t para1,
+                                                    uint8_t para2) {
+  driver_eink_dev_write_command(command);
+  driver_eink_dev_write_byte(para1);
+  driver_eink_dev_write_byte(para2);
 }
 
 /** helper method: write command with 3 parameters */
-static inline void driver_eink_dev_write_command_p3(uint8_t command, uint8_t para1,
-									  uint8_t para2, uint8_t para3)
-{
-	driver_eink_dev_write_command(command);
-	driver_eink_dev_write_byte(para1);
-	driver_eink_dev_write_byte(para2);
-	driver_eink_dev_write_byte(para3);
+static inline void driver_eink_dev_write_command_p3(uint8_t command,
+                                                    uint8_t para1,
+                                                    uint8_t para2,
+                                                    uint8_t para3) {
+  driver_eink_dev_write_command(command);
+  driver_eink_dev_write_byte(para1);
+  driver_eink_dev_write_byte(para2);
+  driver_eink_dev_write_byte(para3);
 }
 
 /** helper method: write command with 4 parameters */
-static inline void driver_eink_dev_write_command_p4(uint8_t command, uint8_t para1,
-									  uint8_t para2, uint8_t para3,
-									  uint8_t para4)
-{
-	driver_eink_dev_write_command(command);
-	driver_eink_dev_write_byte(para1);
-	driver_eink_dev_write_byte(para2);
-	driver_eink_dev_write_byte(para3);
-	driver_eink_dev_write_byte(para4);
+static inline void driver_eink_dev_write_command_p4(uint8_t command,
+                                                    uint8_t para1,
+                                                    uint8_t para2,
+                                                    uint8_t para3,
+                                                    uint8_t para4) {
+  driver_eink_dev_write_command(command);
+  driver_eink_dev_write_byte(para1);
+  driver_eink_dev_write_byte(para2);
+  driver_eink_dev_write_byte(para3);
+  driver_eink_dev_write_byte(para4);
 }
 
 /** write command with `datalen` data bytes */
-void driver_eink_dev_write_command_stream(uint8_t command, const uint8_t *data,
-										 unsigned int datalen);
+void driver_eink_dev_write_command_stream(uint8_t command,
+                                          const uint8_t *data,
+                                          unsigned int datalen);
 
 /** write command with `datalen` data dwords */
-void driver_eink_dev_write_command_stream_u32(uint8_t command, const uint32_t *data,
-										 unsigned int datalen);
+void driver_eink_dev_write_command_stream_u32(uint8_t command,
+                                              const uint32_t *data,
+                                              unsigned int datalen);
 
 __END_DECLS
 
-#endif // DRIVER_EINK_DEV_H
+#endif  // DRIVER_EINK_DEV_H

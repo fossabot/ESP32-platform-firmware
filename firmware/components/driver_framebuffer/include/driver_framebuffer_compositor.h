@@ -8,44 +8,48 @@
 #include "driver_framebuffer_orientation_internal.h"
 
 typedef struct Window_t {
-	/* Linked list */
-	struct Window_t* _prevWindow;
-	struct Window_t* _nextWindow;
-	
-	/* Properties */
-	char* name;                     //The name of the window
-	int16_t x, y;                   // Position (x,y)
-	uint16_t width, height;         // Size
-	bool visible;                   // Visible or hidden
-	enum Orientation orientation;   // Current orientation
-	
-	/* Buffer */
-	uint8_t* buffer;
-	
-	/* Transparency and alpha bending */
-	bool enableTransparentColor;    // Enable transparency
-	uint32_t transparentColor;      // Which color is made transparent
+  /* Linked list */
+  struct Window_t *_prevWindow;
+  struct Window_t *_nextWindow;
+
+  /* Properties */
+  char *name;                    // The name of the window
+  int16_t x, y;                  // Position (x,y)
+  uint16_t width, height;        // Size
+  bool visible;                  // Visible or hidden
+  enum Orientation orientation;  // Current orientation
+
+  /* Buffer */
+  uint8_t *buffer;
+
+  /* Transparency and alpha bending */
+  bool enableTransparentColor;  // Enable transparency
+  uint32_t transparentColor;    // Which color is made transparent
 } Window;
 
-Window* driver_framebuffer_window_create(const char* name, uint16_t width, uint16_t height);
+Window *driver_framebuffer_window_create(const char *name,
+                                         uint16_t width,
+                                         uint16_t height);
 /* Create a window */
 
-void driver_framebuffer_window_remove(Window* window);
+void driver_framebuffer_window_remove(Window *window);
 /* Delete a window */
 
-Window* driver_framebuffer_window_find(const char* name);
+Window *driver_framebuffer_window_find(const char *name);
 /* Find an existing window by name */
 
-Window* driver_framebuffer_window_first();
+Window *driver_framebuffer_window_first();
 /* Find the first window */
 
-Window* driver_framebuffer_window_last();
+Window *driver_framebuffer_window_last();
 /* Find the last window */
 
-void driver_framebuffer_window_focus(Window* window);
+void driver_framebuffer_window_focus(Window *window);
 /* Move a window to the end of the list */
 
-void driver_framebuffer_window_getSize(Window* window, int16_t* width, int16_t* height);
+void driver_framebuffer_window_getSize(Window *window,
+                                       int16_t *width,
+                                       int16_t *height);
 /* Get the width and height of a window */
 
 #endif

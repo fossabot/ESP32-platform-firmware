@@ -5,17 +5,17 @@
 #include <stdint.h>
 #include <esp_err.h>
 
-#define DISOBEY_SAMD_BUTTON_LEFT   0
-#define DISOBEY_SAMD_BUTTON_UP     1
-#define DISOBEY_SAMD_BUTTON_BACK   2
-#define DISOBEY_SAMD_BUTTON_OK     3
-#define DISOBEY_SAMD_BUTTON_DOWN   4
-#define DISOBEY_SAMD_BUTTON_RIGHT  5
+#define DISOBEY_SAMD_BUTTON_LEFT 0
+#define DISOBEY_SAMD_BUTTON_UP 1
+#define DISOBEY_SAMD_BUTTON_BACK 2
+#define DISOBEY_SAMD_BUTTON_OK 3
+#define DISOBEY_SAMD_BUTTON_DOWN 4
+#define DISOBEY_SAMD_BUTTON_RIGHT 5
 
-#define disobey_samd_CMD_LED       0x01
+#define disobey_samd_CMD_LED 0x01
 #define disobey_samd_CMD_BACKLIGHT 0x02
-#define disobey_samd_CMD_BUZZER    0x03
-#define disobey_samd_CMD_OFF       0x04
+#define disobey_samd_CMD_BUZZER 0x03
+#define disobey_samd_CMD_OFF 0x04
 
 __BEGIN_DECLS
 
@@ -24,8 +24,8 @@ typedef void (*driver_disobey_samd_intr_t)(int, int);
 
 /** touch info */
 struct driver_disobey_samd_touch_info {
-	/** bitmapped touch state */
-	uint32_t touch_state;
+  /** bitmapped touch state */
+  uint32_t touch_state;
 };
 
 /**
@@ -41,9 +41,11 @@ extern esp_err_t driver_disobey_samd_init(void);
  * @param pin the pin-number on the disobey_samd chip.
  * @param handler the handler to be called on an interrupt.
  * @param arg the argument passed on to the handler.
- * @note It is safe to set the interrupt handler before a call to driver_disobey_samd_init().
+ * @note It is safe to set the interrupt handler before a call to
+ * driver_disobey_samd_init().
  */
-extern void driver_disobey_samd_set_interrupt_handler(driver_disobey_samd_intr_t handler);
+extern void driver_disobey_samd_set_interrupt_handler(
+    driver_disobey_samd_intr_t handler);
 
 /**
  * Retrieve the disobey_samd status.
@@ -56,7 +58,8 @@ extern int driver_disobey_samd_get_interrupt_status(void);
  * @param info touch info will be written to this structure.
  * @return ESP_OK on success; any other value indicates an error
  */
-extern esp_err_t driver_disobey_samd_get_touch_info(struct driver_disobey_samd_touch_info *info);
+extern esp_err_t driver_disobey_samd_get_touch_info(
+    struct driver_disobey_samd_touch_info *info);
 
 /**
  * Read raw touch, usb and battery statusses
@@ -104,7 +107,10 @@ extern esp_err_t driver_disobey_samd_write_backlight(uint8_t value);
  * @return ESP_OK on success; any other value indicates an error
  */
 
-extern esp_err_t driver_disobey_samd_write_led(uint8_t led, uint8_t r, uint8_t g, uint8_t b);
+extern esp_err_t driver_disobey_samd_write_led(uint8_t led,
+                                               uint8_t r,
+                                               uint8_t g,
+                                               uint8_t b);
 
 /**
  * Set buzzer frequency and duration
@@ -112,7 +118,8 @@ extern esp_err_t driver_disobey_samd_write_led(uint8_t led, uint8_t r, uint8_t g
  * @return ESP_OK on success; any other value indicates an error
  */
 
-extern esp_err_t driver_disobey_samd_write_buzzer(uint16_t freqency, uint16_t duration);
+extern esp_err_t driver_disobey_samd_write_buzzer(uint16_t freqency,
+                                                  uint16_t duration);
 
 /**
  * Turn off LEDs, buzzer and backlight
@@ -124,4 +131,4 @@ extern esp_err_t driver_disobey_samd_write_off(void);
 
 __END_DECLS
 
-#endif // DRIVER_DISOBEY_SAMD_H
+#endif  // DRIVER_DISOBEY_SAMD_H

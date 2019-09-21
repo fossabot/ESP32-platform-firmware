@@ -10,4 +10,4 @@ extern esp_err_t driver_microphone_init(void);
 
 __END_DECLS
 
-#endif // BADGE_MICROPHONE_H
+#endif  // BADGE_MICROPHONE_H

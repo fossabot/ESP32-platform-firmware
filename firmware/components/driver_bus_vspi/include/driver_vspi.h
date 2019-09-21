@@ -22,4 +22,4 @@ extern esp_err_t driver_vspi_freed(void);
 
 __END_DECLS
 
-#endif // BADGE_SPI_H
+#endif  // BADGE_SPI_H

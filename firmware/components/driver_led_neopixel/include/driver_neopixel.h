@@ -36,4 +36,4 @@ extern esp_err_t driver_neopixel_send_data(uint8_t *data, int len);
 
 __END_DECLS
 
-#endif // DRIVER_NEOPIXEL_H
+#endif  // DRIVER_NEOPIXEL_H

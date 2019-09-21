@@ -1,0 +1,14 @@
+﻿---
+BasedOnStyle: Chromium
+AlignConsecutiveAssignments: 'true'
+AlignOperands: 'true'
+AllowShortBlocksOnASingleLine: 'false'
+AllowShortFunctionsOnASingleLine: Empty
+Language: Cpp
+PointerAlignment: Right
+ReflowComments: 'true'
+SortIncludes: 'false'
+SpaceBeforeAssignmentOperators: 'true'
+UseTab: Never
+
+...

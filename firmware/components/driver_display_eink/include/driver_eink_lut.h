@@ -8,29 +8,29 @@
 
 /** specification of display update instruction */
 struct driver_eink_lut_entry {
-	/** the number of cycles the voltages are held; 0 = end of list */
-	uint8_t length;
+  /** the number of cycles the voltages are held; 0 = end of list */
+  uint8_t length;
 
-	/** bitmapped value containing voltages for every (old-bit, new-bit) pair:
-	 * - bits 0,1: from 0 to 0
-	 * - bits 2,3: from 0 to 1
-	 * - bits 4,5: from 1 to 0
-	 * - bits 6,7: from 1 to 1
-	 *
-	 * allowed values:
-	 * - 0: VSS
-	 * - 1: VSH
-	 * - 2: VSL
-	 */
-	uint8_t voltages;
+  /** bitmapped value containing voltages for every (old-bit, new-bit) pair:
+   * - bits 0,1: from 0 to 0
+   * - bits 2,3: from 0 to 1
+   * - bits 4,5: from 1 to 0
+   * - bits 6,7: from 1 to 1
+   *
+   * allowed values:
+   * - 0: VSS
+   * - 1: VSH
+   * - 2: VSL
+   */
+  uint8_t voltages;
 };
 
 /** filters to use on a driver_eink_lut_entry structure */
 enum driver_eink_lut_flags {
-	LUT_FLAG_FIRST    = 1, // do not depend on previous image
-	LUT_FLAG_PARTIAL  = 2, // do not touch already correct pixels
-	LUT_FLAG_WHITE    = 4, // white only
-	LUT_FLAG_BLACK    = 8, // black only
+  LUT_FLAG_FIRST   = 1,  // do not depend on previous image
+  LUT_FLAG_PARTIAL = 2,  // do not touch already correct pixels
+  LUT_FLAG_WHITE   = 4,  // white only
+  LUT_FLAG_BLACK   = 8,  // black only
 };
 
 __BEGIN_DECLS
@@ -43,7 +43,9 @@ __BEGIN_DECLS
  * @param lut output data buffer. should be of size DRIVER_EINK_LUT_MAX_SIZE.
  * @return lut length. returns -1 on error.
  */
-extern int driver_eink_lut_generate(const struct driver_eink_lut_entry *list, enum driver_eink_lut_flags flags, uint8_t *lut);
+extern int driver_eink_lut_generate(const struct driver_eink_lut_entry *list,
+                                    enum driver_eink_lut_flags flags,
+                                    uint8_t *lut);
 
 /* pre-defined lookup-table display-updates. */
 
@@ -58,4 +60,4 @@ extern const struct driver_eink_lut_entry driver_eink_lut_fastest[];
 
 __END_DECLS
 
-#endif // DRIVER_EINK_LUT_H
+#endif  // DRIVER_EINK_LUT_H
