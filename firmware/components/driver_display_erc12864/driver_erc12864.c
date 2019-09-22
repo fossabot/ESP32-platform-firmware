@@ -28,7 +28,7 @@ static inline esp_err_t set_page_address(uint8_t page) {
 
 static inline esp_err_t set_column(uint8_t column) {
   uint8_t buffer[] = {0x10 | (column >> 4), (0x0f & column) | 0x04};
-  esp_err_t res = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864, buffer, 2);
+  esp_err_t res    = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864, buffer, 2);
   if (res != ESP_OK) {
     ESP_LOGE(TAG, "i2c write column(0x%02x): error %d", column, res);
     return res;
@@ -40,7 +40,7 @@ esp_err_t driver_erc12864_set_contrast(uint8_t contrast) {
   if (contrast > 63)
     contrast = 63;
   uint8_t buffer[] = {0x81, contrast};
-  esp_err_t res = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864, buffer, 2);
+  esp_err_t res    = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864, buffer, 2);
   if (res != ESP_OK) {
     ESP_LOGE(TAG, "i2c write contrast error %d", res);
     return res;
@@ -171,8 +171,7 @@ esp_err_t driver_erc12864_write(const uint8_t *buffer) {
               }
               res = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864+1, data,
       32); } else {*/
-      res = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864 + 1,
-                                    buffer + offset, 32);
+      res = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864 + 1, buffer + offset, 32);
       //}
       if (res != ESP_OK)
         break;
@@ -212,8 +211,7 @@ esp_err_t driver_erc12864_write_part(const uint8_t *buffer,
       if (res != ESP_OK)
         break;
       uint16_t offset = 128 * page + 32 * num;
-      res             = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864 + 1,
-                                    buffer + offset, 32);
+      res             = driver_i2c_write_buffer(CONFIG_I2C_ADDR_ERC12864 + 1, buffer + offset, 32);
       if (res != ESP_OK)
         break;
     }

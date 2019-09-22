@@ -30,16 +30,14 @@ esp_err_t driver_rtcmem_int_write(int pos, int val) {
   if (pos >= RTC_MEM_INT_SIZE)
     return ESP_FAIL;
   rtc_mem_int[pos] = val;
-  rtc_mem_int_crc =
-      crc16_le(0, (uint8_t const *)rtc_mem_int, RTC_MEM_INT_SIZE * sizeof(int));
+  rtc_mem_int_crc  = crc16_le(0, (uint8_t const *)rtc_mem_int, RTC_MEM_INT_SIZE * sizeof(int));
   return ESP_OK;
 }
 
 esp_err_t driver_rtcmem_int_read(int pos, int *val) {
   if (pos >= RTC_MEM_INT_SIZE)
     return ESP_FAIL;
-  if (rtc_mem_int_crc !=
-      crc16_le(0, (uint8_t const *)rtc_mem_int, RTC_MEM_INT_SIZE * sizeof(int)))
+  if (rtc_mem_int_crc != crc16_le(0, (uint8_t const *)rtc_mem_int, RTC_MEM_INT_SIZE * sizeof(int)))
     return ESP_FAIL;
   *val = rtc_mem_int[pos];
   return ESP_OK;
@@ -55,8 +53,7 @@ esp_err_t driver_rtcmem_string_write(const char *str) {
 }
 
 esp_err_t driver_rtcmem_string_read(const char **str) {
-  if (rtc_mem_str_crc !=
-      crc16_le(0, (uint8_t const *)rtc_mem_str, RTC_MEM_STR_SIZE))
+  if (rtc_mem_str_crc != crc16_le(0, (uint8_t const *)rtc_mem_str, RTC_MEM_STR_SIZE))
     return ESP_FAIL;
   *str = rtc_mem_str;
   return ESP_OK;

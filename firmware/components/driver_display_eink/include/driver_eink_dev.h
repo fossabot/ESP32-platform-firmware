@@ -57,16 +57,13 @@ extern void driver_eink_dev_write_byte(uint8_t data);
 extern void driver_eink_dev_write_command(uint8_t command);
 
 /** helper method: write command with 1 parameter */
-static inline void driver_eink_dev_write_command_p1(uint8_t command,
-                                                    uint8_t para1) {
+static inline void driver_eink_dev_write_command_p1(uint8_t command, uint8_t para1) {
   driver_eink_dev_write_command(command);
   driver_eink_dev_write_byte(para1);
 }
 
 /** helper method: write command with 2 parameters */
-static inline void driver_eink_dev_write_command_p2(uint8_t command,
-                                                    uint8_t para1,
-                                                    uint8_t para2) {
+static inline void driver_eink_dev_write_command_p2(uint8_t command, uint8_t para1, uint8_t para2) {
   driver_eink_dev_write_command(command);
   driver_eink_dev_write_byte(para1);
   driver_eink_dev_write_byte(para2);

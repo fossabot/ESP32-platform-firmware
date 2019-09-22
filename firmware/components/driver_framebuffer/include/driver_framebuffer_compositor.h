@@ -27,9 +27,7 @@ typedef struct Window_t {
   uint32_t transparentColor;    // Which color is made transparent
 } Window;
 
-Window *driver_framebuffer_window_create(const char *name,
-                                         uint16_t width,
-                                         uint16_t height);
+Window *driver_framebuffer_window_create(const char *name, uint16_t width, uint16_t height);
 /* Create a window */
 
 void driver_framebuffer_window_remove(Window *window);
@@ -47,9 +45,7 @@ Window *driver_framebuffer_window_last();
 void driver_framebuffer_window_focus(Window *window);
 /* Move a window to the end of the list */
 
-void driver_framebuffer_window_getSize(Window *window,
-                                       int16_t *width,
-                                       int16_t *height);
+void driver_framebuffer_window_getSize(Window *window, int16_t *width, int16_t *height);
 /* Get the width and height of a window */
 
 #endif

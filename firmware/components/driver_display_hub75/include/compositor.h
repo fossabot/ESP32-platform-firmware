@@ -38,12 +38,7 @@ void compositor_setPixel(int x, int y, Color color);
 
 void compositor_addText(char *text, Color color, int x, int y);
 void compositor_addScrollText(char *text, Color color, int x, int y, int sizeX);
-void compositor_addAnimation(uint8_t *image,
-                             int x,
-                             int y,
-                             int width,
-                             int length,
-                             int numFrames);
+void compositor_addAnimation(uint8_t *image, int x, int y, int width, int length, int numFrames);
 void compositor_addImage(uint8_t *image, int x, int y, int width, int length);
 
 unsigned int compositor_getTextWidth(char *text);

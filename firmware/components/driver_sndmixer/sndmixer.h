@@ -11,10 +11,7 @@ extern "C" {
 typedef struct {
   /*! Initialize the sound source. Returns size of data returned per call of
    * fill_buffer. */
-  int (*init_source)(const void *data_start,
-                     const void *data_end,
-                     int req_sample_rate,
-                     void **ctx);
+  int (*init_source)(const void *data_start, const void *data_end, int req_sample_rate, void **ctx);
   /*! Get the actual sample rate at which the source returns data */
   int (*get_sample_rate)(void *ctx);
   /*! Decode a bufferful of data. Returns 0 when file ended or something went
@@ -48,9 +45,7 @@ int sndmixer_init(int no_channels);
  * queued, this sound can be stopped to make room for the new sound.
  * @return The ID of the queued sound, for use with the other functions.
  */
-int sndmixer_queue_wav(const void *wav_start,
-                       const void *wav_end,
-                       int evictable);
+int sndmixer_queue_wav(const void *wav_start, const void *wav_end, int evictable);
 
 /**
  * @brief Queue the data of a .mod/.xm/.s3m file to be played

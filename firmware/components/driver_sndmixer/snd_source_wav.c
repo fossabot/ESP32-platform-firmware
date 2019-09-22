@@ -46,10 +46,7 @@ typedef struct __attribute__((packed)) {
   };
 } chunk_hdr_t;
 
-int wav_init_source(const void *data_start,
-                    const void *data_end,
-                    int req_sample_rate,
-                    void **ctx) {
+int wav_init_source(const void *data_start, const void *data_end, int req_sample_rate, void **ctx) {
   // Check sanity first
   char *p        = (char *)data_start;
   wav_ctx_t *wav = calloc(sizeof(wav_ctx_t), 1);
@@ -86,8 +83,7 @@ int wav_init_source(const void *data_start,
     printf("No fmt chunk or unsupported bits/sample: %d\n", wav->bits);
     goto err;
   }
-  printf("Wav: %d bit/sample, %d Hz, %d bytes long\n", wav->bits, wav->rate,
-         wav->data_len);
+  printf("Wav: %d bit/sample, %d Hz, %d bytes long\n", wav->bits, wav->rate, wav->data_len);
   wav->pos = 0;
   *ctx     = (void *)wav;
   return CHUNK_SIZE;
@@ -124,10 +120,9 @@ void wav_deinit_source(void *ctx) {
   free(wav);
 }
 
-const sndmixer_source_t sndmixer_source_wav = {
-    .init_source     = wav_init_source,
-    .get_sample_rate = wav_get_sample_rate,
-    .fill_buffer     = wav_fill_buffer,
-    .deinit_source   = wav_deinit_source};
+const sndmixer_source_t sndmixer_source_wav = {.init_source     = wav_init_source,
+                                               .get_sample_rate = wav_get_sample_rate,
+                                               .fill_buffer     = wav_fill_buffer,
+                                               .deinit_source   = wav_deinit_source};
 
 #endif

@@ -51,8 +51,7 @@ esp_err_t driver_sdcard_unmount() {
   return ESP_OK;
 }
 
-esp_err_t driver_sdcard_mount(const char *mount_point,
-                              bool format_if_mount_failed) {
+esp_err_t driver_sdcard_mount(const char *mount_point, bool format_if_mount_failed) {
   if (sdcard_is_mounted)
     return ESP_OK;  // Already mounted
 
@@ -148,8 +147,7 @@ esp_err_t driver_sdcard_mount(const char *mount_point,
       .allocation_unit_size   = 0};
 
   sdmmc_card_t *card;
-  esp_err_t res = esp_vfs_fat_sdmmc_mount(mount_point, &host, &slot_config,
-                                          &mount_config, &card);
+  esp_err_t res = esp_vfs_fat_sdmmc_mount(mount_point, &host, &slot_config, &mount_config, &card);
 
   if (res != ESP_OK) {
     if (res == ESP_FAIL) {
@@ -161,8 +159,7 @@ esp_err_t driver_sdcard_mount(const char *mount_point,
     } else if (res == ESP_ERR_INVALID_STATE) {
       ESP_LOGE(TAG, "Failed to initialize the SD card: invalid state).");
     } else {
-      ESP_LOGE(TAG, "Failed to initialize the SD card (%s). ",
-               esp_err_to_name(res));
+      ESP_LOGE(TAG, "Failed to initialize the SD card (%s). ", esp_err_to_name(res));
     }
     return res;
   }

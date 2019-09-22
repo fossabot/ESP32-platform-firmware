@@ -88,9 +88,8 @@ void kchal_sound_push(uint8_t *buf, int len) {
     if (plen > SND_CHUNKSZ)
       plen = SND_CHUNKSZ;
     for (int j = 0; j < plen; j++) {
-      int s = ((((int)buf[i + j]) - 128) *
-               config.volume);  // Make [-128,127], multiply with volume
-      s     = (s >> 8) + 128;   // divide off volume max, get back to [0-255]
+      int s = ((((int)buf[i + j]) - 128) * config.volume);  // Make [-128,127], multiply with volume
+      s     = (s >> 8) + 128;  // divide off volume max, get back to [0-255]
       if (s > 255)
         s = 255;
       if (s < 0)

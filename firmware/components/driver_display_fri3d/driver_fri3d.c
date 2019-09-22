@@ -77,8 +77,7 @@ static void driver_fri3d_spi_post_transfer_callback(spi_transaction_t *t) {
 void displayTask(void *pvParameter) {
   TickType_t xLastWakeTime = xTaskGetTickCount();
   while (1) {
-    vTaskDelayUntil(&xLastWakeTime,
-                    1.0 / framerate * 1000 / portTICK_PERIOD_MS);
+    vTaskDelayUntil(&xLastWakeTime, 1.0 / framerate * 1000 / portTICK_PERIOD_MS);
     for (uint8_t j = 0; j < BRIGHTNESS_STEPS; j++) {
       for (uint8_t i = 0; i < 8; i++)
         driver_fri3d_send_line(i, j);
@@ -136,14 +135,13 @@ esp_err_t driver_fri3d_init(void) {
 
   printf("Starting fri3d task...\n");
 
-  xTaskCreatePinnedToCore(
-      &displayTask, /* Task function. */
-      "display",    /* String with name of task. */
-      1024,         /* Stack size in words. */
-      NULL,         /* Parameter passed as input of the task */
-      1,            /* Priority of the task. (Lower = more important) */
-      NULL,         /* Task handle. */
-      1             /* Core ID */
+  xTaskCreatePinnedToCore(&displayTask, /* Task function. */
+                          "display",    /* String with name of task. */
+                          1024,         /* Stack size in words. */
+                          NULL,         /* Parameter passed as input of the task */
+                          1,            /* Priority of the task. (Lower = more important) */
+                          NULL,         /* Task handle. */
+                          1             /* Core ID */
   );
 
   driver_fri3d_init_done = true;

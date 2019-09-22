@@ -13,111 +13,106 @@
 static const char *TAG = "driver_eink_lut";
 
 // full, includes inverting
-const struct driver_eink_lut_entry driver_eink_lut_full[] = {
-    {
-        .length   = 23,
-        .voltages = 0x02,
-    },
-    {
-        .length   = 4,
-        .voltages = 0x01,
-    },
-    {
-        .length   = 11,
-        .voltages = 0x11,
-    },
-    {
-        .length   = 4,
-        .voltages = 0x12,
-    },
-    {
-        .length   = 6,
-        .voltages = 0x22,
-    },
-    {
-        .length   = 5,
-        .voltages = 0x66,
-    },
-    {
-        .length   = 4,
-        .voltages = 0x69,
-    },
-    {
-        .length   = 5,
-        .voltages = 0x59,
-    },
-    {
-        .length   = 1,
-        .voltages = 0x58,
-    },
-    {
-        .length   = 14,
-        .voltages = 0x99,
-    },
-    {
-        .length   = 1,
-        .voltages = 0x88,
-    },
-    {.length = 0}};
+const struct driver_eink_lut_entry driver_eink_lut_full[] = {{
+                                                                 .length   = 23,
+                                                                 .voltages = 0x02,
+                                                             },
+                                                             {
+                                                                 .length   = 4,
+                                                                 .voltages = 0x01,
+                                                             },
+                                                             {
+                                                                 .length   = 11,
+                                                                 .voltages = 0x11,
+                                                             },
+                                                             {
+                                                                 .length   = 4,
+                                                                 .voltages = 0x12,
+                                                             },
+                                                             {
+                                                                 .length   = 6,
+                                                                 .voltages = 0x22,
+                                                             },
+                                                             {
+                                                                 .length   = 5,
+                                                                 .voltages = 0x66,
+                                                             },
+                                                             {
+                                                                 .length   = 4,
+                                                                 .voltages = 0x69,
+                                                             },
+                                                             {
+                                                                 .length   = 5,
+                                                                 .voltages = 0x59,
+                                                             },
+                                                             {
+                                                                 .length   = 1,
+                                                                 .voltages = 0x58,
+                                                             },
+                                                             {
+                                                                 .length   = 14,
+                                                                 .voltages = 0x99,
+                                                             },
+                                                             {
+                                                                 .length   = 1,
+                                                                 .voltages = 0x88,
+                                                             },
+                                                             {.length = 0}};
 
 // full, no inversion
-const struct driver_eink_lut_entry driver_eink_lut_normal[] = {
-    {
-        .length   = 3,
-        .voltages = 0x10,
-    },
-    {
-        .length   = 5,
-        .voltages = 0x18,
-    },
-    {
-        .length   = 1,
-        .voltages = 0x08,
-    },
-    {
-        .length   = 8,
-        .voltages = 0x18,
-    },
-    {
-        .length   = 2,
-        .voltages = 0x08,
-    },
-    {.length = 0}};
+const struct driver_eink_lut_entry driver_eink_lut_normal[] = {{
+                                                                   .length   = 3,
+                                                                   .voltages = 0x10,
+                                                               },
+                                                               {
+                                                                   .length   = 5,
+                                                                   .voltages = 0x18,
+                                                               },
+                                                               {
+                                                                   .length   = 1,
+                                                                   .voltages = 0x08,
+                                                               },
+                                                               {
+                                                                   .length   = 8,
+                                                                   .voltages = 0x18,
+                                                               },
+                                                               {
+                                                                   .length   = 2,
+                                                                   .voltages = 0x08,
+                                                               },
+                                                               {.length = 0}};
 
 // full, no inversion, needs 2 updates for full update
-const struct driver_eink_lut_entry driver_eink_lut_faster[] = {
-    {
-        .length   = 1,
-        .voltages = 0x10,
-    },
-    {
-        .length   = 8,
-        .voltages = 0x18,
-    },
-    {
-        .length   = 1,
-        .voltages = 0x08,
-    },
-    {.length = 0}};
+const struct driver_eink_lut_entry driver_eink_lut_faster[] = {{
+                                                                   .length   = 1,
+                                                                   .voltages = 0x10,
+                                                               },
+                                                               {
+                                                                   .length   = 8,
+                                                                   .voltages = 0x18,
+                                                               },
+                                                               {
+                                                                   .length   = 1,
+                                                                   .voltages = 0x08,
+                                                               },
+                                                               {.length = 0}};
 
 // full, no inversion, needs 4 updates for full update
-const struct driver_eink_lut_entry driver_eink_lut_fastest[] = {
-    {
-        .length   = 1,
-        .voltages = 0x10,
-    },
-    {
-        .length   = 5,
-        .voltages = 0x18,
-    },
-    {
-        .length   = 1,
-        .voltages = 0x08,
-    },
-    {.length = 0}};
+const struct driver_eink_lut_entry driver_eink_lut_fastest[] = {{
+                                                                    .length   = 1,
+                                                                    .voltages = 0x10,
+                                                                },
+                                                                {
+                                                                    .length   = 5,
+                                                                    .voltages = 0x18,
+                                                                },
+                                                                {
+                                                                    .length   = 1,
+                                                                    .voltages = 0x08,
+                                                                },
+                                                                {.length = 0}};
 
-static uint8_t driver_eink_lut_conv(uint8_t voltages,
-                                    enum driver_eink_lut_flags flags) {
+static uint8_t driver_eink_lut_conv(uint8_t voltages, enum driver_eink_lut_flags flags) {
   if (flags & LUT_FLAG_FIRST) {
     voltages |= voltages >> 4;
     voltages &= 15;
@@ -201,10 +196,9 @@ int driver_eink_lut_generate_gdeh029a1(const struct driver_eink_lut_entry *list,
 }
 
 // DEPG0290B01
-int driver_eink_lut_generate_depg0290b1(
-    const struct driver_eink_lut_entry *list,
-    enum driver_eink_lut_flags flags,
-    uint8_t *lut) {
+int driver_eink_lut_generate_depg0290b1(const struct driver_eink_lut_entry *list,
+                                        enum driver_eink_lut_flags flags,
+                                        uint8_t *lut) {
   ESP_LOGD(TAG, "flags = %d.", flags);
 
   memset(lut, 0, 70);

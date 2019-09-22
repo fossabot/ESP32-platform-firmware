@@ -81,8 +81,7 @@ static int calc_needed_dma_descs_for(i2s_parallel_buffer_desc_t *desc) {
   return ret;
 }
 
-static void fill_dma_desc(volatile lldesc_t *dmadesc,
-                          i2s_parallel_buffer_desc_t *bufdesc) {
+static void fill_dma_desc(volatile lldesc_t *dmadesc, i2s_parallel_buffer_desc_t *bufdesc) {
   int n = 0;
   for (int i = 0; bufdesc[i].memory != NULL; i++) {
     int len       = bufdesc[i].size;
@@ -135,8 +134,7 @@ static int i2snum() {
   return (&hw == &I2S0) ? 0 : 1;
 }
 
-void i2sparallel_init(i2s_parallel_buffer_desc_t *bufa,
-                      i2s_parallel_buffer_desc_t *bufb) {
+void i2sparallel_init(i2s_parallel_buffer_desc_t *bufa, i2s_parallel_buffer_desc_t *bufb) {
   // Figure out which signal numbers to use for routing
   int sig_data_base, sig_clk;
   if (&hw == &I2S0) {
@@ -180,11 +178,10 @@ void i2sparallel_init(i2s_parallel_buffer_desc_t *bufa,
   hw.conf2.val    = 0;
   hw.conf2.lcd_en = 1;
 
-  hw.sample_rate_conf.val         = 0;
-  hw.sample_rate_conf.rx_bits_mod = bits;
-  hw.sample_rate_conf.tx_bits_mod = bits;
-  hw.sample_rate_conf.rx_bck_div_num =
-      4;  // ToDo: Unsure about what this does...
+  hw.sample_rate_conf.val            = 0;
+  hw.sample_rate_conf.rx_bits_mod    = bits;
+  hw.sample_rate_conf.tx_bits_mod    = bits;
+  hw.sample_rate_conf.rx_bck_div_num = 4;  // ToDo: Unsure about what this does...
   hw.sample_rate_conf.tx_bck_div_num = 4;
   hw.conf2.lcd_tx_wrx2_en            = 1;
 
@@ -220,15 +217,14 @@ void i2sparallel_init(i2s_parallel_buffer_desc_t *bufa,
   hw.timing.val = 0;
 
   // Allocate DMA descriptors
-  i2s_state[i2snum()] =
-      (i2s_parallel_state_t *)malloc(sizeof(i2s_parallel_state_t));
+  i2s_state[i2snum()]      = (i2s_parallel_state_t *)malloc(sizeof(i2s_parallel_state_t));
   i2s_parallel_state_t *st = i2s_state[i2snum()];
   st->desccount_a          = calc_needed_dma_descs_for(bufa);
   st->desccount_b          = calc_needed_dma_descs_for(bufb);
-  st->dmadesc_a            = (volatile lldesc_t *)heap_caps_malloc(
-      st->desccount_a * sizeof(lldesc_t), MALLOC_CAP_DMA);
-  st->dmadesc_b = (volatile lldesc_t *)heap_caps_malloc(
-      st->desccount_b * sizeof(lldesc_t), MALLOC_CAP_DMA);
+  st->dmadesc_a =
+      (volatile lldesc_t *)heap_caps_malloc(st->desccount_a * sizeof(lldesc_t), MALLOC_CAP_DMA);
+  st->dmadesc_b =
+      (volatile lldesc_t *)heap_caps_malloc(st->desccount_b * sizeof(lldesc_t), MALLOC_CAP_DMA);
 
   // and fill them
   fill_dma_desc(st->dmadesc_a, bufa);
@@ -251,8 +247,7 @@ void i2sparallel_init(i2s_parallel_buffer_desc_t *bufa,
   hw.conf.rx_fifo_reset    = 0;
 
   // Start dma on front buffer
-  hw.lc_conf.val =
-      I2S_OUT_DATA_BURST_EN | I2S_OUTDSCR_BURST_EN | I2S_OUT_DATA_BURST_EN;
+  hw.lc_conf.val    = I2S_OUT_DATA_BURST_EN | I2S_OUTDSCR_BURST_EN | I2S_OUT_DATA_BURST_EN;
   hw.out_link.addr  = ((uint32_t)(&st->dmadesc_a[0]));
   hw.out_link.start = 1;
   hw.conf.tx_start  = 1;
@@ -270,10 +265,8 @@ void i2sparallel_flipBuffer(int bufid) {
     active_dma_chain = (lldesc_t *)&i2s_state[no]->dmadesc_b[0];
   }
 
-  i2s_state[no]->dmadesc_a[i2s_state[no]->desccount_a - 1].qe.stqe_next =
-      active_dma_chain;
-  i2s_state[no]->dmadesc_b[i2s_state[no]->desccount_b - 1].qe.stqe_next =
-      active_dma_chain;
+  i2s_state[no]->dmadesc_a[i2s_state[no]->desccount_a - 1].qe.stqe_next = active_dma_chain;
+  i2s_state[no]->dmadesc_b[i2s_state[no]->desccount_b - 1].qe.stqe_next = active_dma_chain;
 }
 
 #endif

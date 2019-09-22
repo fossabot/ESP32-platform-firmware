@@ -47,20 +47,17 @@ void ICS41350_disp_buf(uint8_t *buf, int length) {
 
 static QueueHandle_t soundQueue;
 void init_output() {
-  i2s_config_t cfg = {
-      .mode                 = I2S_MODE_TX | I2S_MODE_MASTER,
-      .sample_rate          = 44100,
-      .bits_per_sample      = 16,
-      .channel_format       = I2S_CHANNEL_FMT_RIGHT_LEFT,
-      .communication_format = I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB,
-      .intr_alloc_flags     = 0,
-      .dma_buf_count        = 4,
-      .dma_buf_len          = 1024};
+  i2s_config_t cfg = {.mode                 = I2S_MODE_TX | I2S_MODE_MASTER,
+                      .sample_rate          = 44100,
+                      .bits_per_sample      = 16,
+                      .channel_format       = I2S_CHANNEL_FMT_RIGHT_LEFT,
+                      .communication_format = I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB,
+                      .intr_alloc_flags     = 0,
+                      .dma_buf_count        = 4,
+                      .dma_buf_len          = 1024};
 
-  static const i2s_pin_config_t pin_config = {.bck_io_num   = 13,
-                                              .ws_io_num    = 15,
-                                              .data_out_num = 2,
-                                              .data_in_num = I2S_PIN_NO_CHANGE};
+  static const i2s_pin_config_t pin_config = {
+      .bck_io_num = 13, .ws_io_num = 15, .data_out_num = 2, .data_in_num = I2S_PIN_NO_CHANGE};
 
   i2s_driver_install(1, &cfg, 4, &soundQueue);
   i2s_set_sample_rates(1, cfg.sample_rate);
@@ -77,8 +74,7 @@ void ICS41350_record_task(void *arg) {
   init_output();
 
   while (1) {
-    int read = i2s_read_bytes(CONFIG_DRIVER_MICROPHONE_I2S_NUM, (char *)buffer,
-                              READ_LEN, 1);
+    int read = i2s_read_bytes(CONFIG_DRIVER_MICROPHONE_I2S_NUM, (char *)buffer, READ_LEN, 1);
     // ICS41350_disp_buf((uint8_t*) buffer, READ_LEN);
     // vTaskDelay(1000 / portTICK_RATE_MS);
     i2s_write_bytes(1, (char *)buffer, read, portMAX_DELAY);
@@ -86,8 +82,7 @@ void ICS41350_record_task(void *arg) {
 }
 
 esp_err_t driver_microphone_test(void) {
-  xTaskCreate(ICS41350_record_task, "ICS41350_record_task", 1024 * 2, NULL, 5,
-              NULL);
+  xTaskCreate(ICS41350_record_task, "ICS41350_record_task", 1024 * 2, NULL, 5, NULL);
   return ESP_OK;
 }
 
@@ -97,16 +92,15 @@ esp_err_t driver_microphone_init(void) {
     return ESP_OK;
   ESP_LOGD(TAG, "init called");
 
-  i2s_config_t i2s_config = {
-      .mode                 = I2S_MODE_MASTER | I2S_MODE_RX | I2S_MODE_PDM,
-      .sample_rate          = 44100,
-      .bits_per_sample      = 16,
-      .channel_format       = I2S_CHANNEL_FMT_RIGHT_LEFT,
-      .communication_format = I2S_COMM_FORMAT_PCM,
-      .dma_buf_count        = 2,
-      .dma_buf_len          = 8,
-      .use_apll             = 0,
-      .intr_alloc_flags     = ESP_INTR_FLAG_LEVEL1};
+  i2s_config_t i2s_config = {.mode                 = I2S_MODE_MASTER | I2S_MODE_RX | I2S_MODE_PDM,
+                             .sample_rate          = 44100,
+                             .bits_per_sample      = 16,
+                             .channel_format       = I2S_CHANNEL_FMT_RIGHT_LEFT,
+                             .communication_format = I2S_COMM_FORMAT_PCM,
+                             .dma_buf_count        = 2,
+                             .dma_buf_len          = 8,
+                             .use_apll             = 0,
+                             .intr_alloc_flags     = ESP_INTR_FLAG_LEVEL1};
 
   i2s_pin_config_t pin_config = {
       .ws_io_num   = 25,

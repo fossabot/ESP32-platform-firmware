@@ -46,10 +46,7 @@ bool driver_framebuffer_flush(uint32_t flags);
 void driver_framebuffer_fill(Window *window, uint32_t value);
 /* Fill the framebuffer or the provided frame with a single color */
 
-void driver_framebuffer_setPixel(Window *window,
-                                 int16_t x,
-                                 int16_t y,
-                                 uint32_t value);
+void driver_framebuffer_setPixel(Window *window, int16_t x, int16_t y, uint32_t value);
 /* Set a pixel in the framebuffer or the provided frame to a color */
 
 uint32_t driver_framebuffer_getPixel(Window *window, int16_t x, int16_t y);

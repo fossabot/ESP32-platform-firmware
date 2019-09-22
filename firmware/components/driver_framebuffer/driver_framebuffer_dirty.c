@@ -20,11 +20,7 @@ bool driver_framebuffer_is_dirty() {
   return (dirty_x1 >= dirty_x0) || (dirty_y1 >= dirty_y0);
 }
 
-void driver_framebuffer_set_dirty_area(int16_t x0,
-                                       int16_t y0,
-                                       int16_t x1,
-                                       int16_t y1,
-                                       bool force) {
+void driver_framebuffer_set_dirty_area(int16_t x0, int16_t y0, int16_t x1, int16_t y1, bool force) {
   if (force) {
     // Just set the dirty area
     dirty_x0 = x0;
@@ -52,10 +48,7 @@ void driver_framebuffer_set_dirty_area(int16_t x0,
     dirty_y1 = FB_HEIGHT - 1;
 }
 
-void driver_framebuffer_get_dirty_area(int16_t *x0,
-                                       int16_t *y0,
-                                       int16_t *x1,
-                                       int16_t *y1) {
+void driver_framebuffer_get_dirty_area(int16_t *x0, int16_t *y0, int16_t *x1, int16_t *y1) {
   *x0 = dirty_x0;
   *y0 = dirty_y0;
   *x1 = dirty_x1;

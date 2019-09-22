@@ -126,8 +126,7 @@ int main(int argc, char *argv[]) {
   // support rendering multiple levels of gray in a glyph.
   // See https://github.com/adafruit/Adafruit-GFX-Library/issues/103
   FT_UInt interpreter_version = TT_INTERPRETER_VERSION_35;
-  FT_Property_Set(library, "truetype", "interpreter-version",
-                  &interpreter_version);
+  FT_Property_Set(library, "truetype", "interpreter-version", &interpreter_version);
 
   if ((err = FT_New_Face(library, argv[1], 0, &face))) {
     fprintf(stderr, "Font load error: %d", err);
@@ -208,9 +207,8 @@ int main(int argc, char *argv[]) {
   // Output glyph attributes table (one per character)
   printf("const GFXglyph %sGlyphs[] PROGMEM = {\n", fontName);
   for (i = first, j = 0; i <= last; i++, j++) {
-    printf("  { %5d, %3d, %3d, %3d, %4d, %4d }", table[j].bitmapOffset,
-           table[j].width, table[j].height, table[j].xAdvance, table[j].xOffset,
-           table[j].yOffset);
+    printf("  { %5d, %3d, %3d, %3d, %4d, %4d }", table[j].bitmapOffset, table[j].width,
+           table[j].height, table[j].xAdvance, table[j].xOffset, table[j].yOffset);
     if (i < last) {
       printf(",   // 0x%02X", i);
       if ((i >= ' ') && (i <= '~')) {
@@ -232,8 +230,7 @@ int main(int argc, char *argv[]) {
     // No face height info, assume fixed width and get from a glyph.
     printf("  0x%02X, 0x%02X, %d };\n\n", first, last, table[0].height);
   } else {
-    printf("  0x%02X, 0x%02X, %ld };\n\n", first, last,
-           face->size->metrics.height >> 6);
+    printf("  0x%02X, 0x%02X, %ld };\n\n", first, last, face->size->metrics.height >> 6);
   }
   printf("// Approx. %d bytes\n", bitmapOffset + (last - first + 1) * 7 + 7);
   // Size estimate is based on AVR struct and pointer sizes;

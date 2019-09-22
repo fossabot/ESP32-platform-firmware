@@ -65,14 +65,13 @@ const char *fontNames[] = {
     "pixelade13",            // SHA2017
     "7x5"                    // CAMPZONE2019
 };
-const GFXfont *fontPointers[] = {
-    &org_018pt7b, &fairlight8pt7b, &fairlight12pt7b, &dejavusans20pt7b,
-    &permanentmarker22pt7b, &permanentmarker36pt7b, &robotoblack22pt7b,
-    &robotoblackitalic24pt7b, &roboto12pt7b, &roboto18pt7b, &roboto22pt7b,
-    &weather42pt8b,
-    &roboto12pt7b,  // Replaced pixelade13 with something that actually looks
-                    // nice.
-    &ipane7x5};
+const GFXfont *fontPointers[] = {&org_018pt7b, &fairlight8pt7b, &fairlight12pt7b, &dejavusans20pt7b,
+                                 &permanentmarker22pt7b, &permanentmarker36pt7b, &robotoblack22pt7b,
+                                 &robotoblackitalic24pt7b, &roboto12pt7b, &roboto18pt7b,
+                                 &roboto22pt7b, &weather42pt8b,
+                                 &roboto12pt7b,  // Replaced pixelade13 with something that actually
+                                                 // looks nice.
+                                 &ipane7x5};
 
 /* Private functions */
 void _print_char(Window *window,
@@ -105,12 +104,10 @@ void _print_char(Window *window,
         bits = bitmap[bitmapOffset++];
       if (bits & 0x80) {
         if (xScale == 1 && yScale == 1) {
-          driver_framebuffer_setPixel(window, x0 + xOffset + x,
-                                      y0 + yOffset + y - 1, color);
+          driver_framebuffer_setPixel(window, x0 + xOffset + x, y0 + yOffset + y - 1, color);
         } else {
           driver_framebuffer_rect(window, x0 + (xOffset + x) * xScale,
-                                  y0 + (yOffset + y) * yScale - 1, xScale,
-                                  yScale, true, color);
+                                  y0 + (yOffset + y) * yScale - 1, xScale, yScale, true, color);
         }
       }
       bits <<= 1;
@@ -136,8 +133,7 @@ void _write(Window *window,
     *x = x0;
     *y += font->yAdvance * yScale;
   } else if (c != '\r') {
-    _print_char(window, c, *x, *y + (font->yAdvance * yScale), xScale, yScale,
-                color, font);
+    _print_char(window, c, *x, *y + (font->yAdvance * yScale), xScale, yScale, color, font);
     *x += glyph->xAdvance * xScale;
   }
 }
@@ -200,8 +196,7 @@ uint16_t driver_framebuffer_print_len(Window *window,
   return y;
 }
 
-uint16_t driver_framebuffer_get_string_width(const char *str,
-                                             const GFXfont *font) {
+uint16_t driver_framebuffer_get_string_width(const char *str, const GFXfont *font) {
   uint16_t width    = 0;
   uint16_t maxWidth = 0;
   for (uint16_t i = 0; i < strlen(str); i++) {
@@ -218,8 +213,7 @@ uint16_t driver_framebuffer_get_string_width(const char *str,
   return width;
 }
 
-uint16_t driver_framebuffer_get_string_height(const char *str,
-                                              const GFXfont *font) {
+uint16_t driver_framebuffer_get_string_height(const char *str, const GFXfont *font) {
   uint16_t height = font->yAdvance;
   if (strlen(str) < 1)
     return 0;

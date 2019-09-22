@@ -40,9 +40,7 @@ uint16_t driver_framebuffer_print_len(Window *window,
                                       uint8_t yScale,
                                       uint32_t color,
                                       const GFXfont *font);
-uint16_t driver_framebuffer_get_string_width(const char *str,
-                                             const GFXfont *font);
-uint16_t driver_framebuffer_get_string_height(const char *str,
-                                              const GFXfont *font);
+uint16_t driver_framebuffer_get_string_width(const char *str, const GFXfont *font);
+uint16_t driver_framebuffer_get_string_height(const char *str, const GFXfont *font);
 
 #endif

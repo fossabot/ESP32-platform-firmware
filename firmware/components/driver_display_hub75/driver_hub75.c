@@ -73,10 +73,8 @@ void render16() {
     // Fill bitplanes with the data for the current image
     for (int plane = 0; plane < BITPLANE_CNT; plane++) {
       int mask =
-          (1 << (8 - BITPLANE_CNT +
-                 plane));  // bitmask for pixel data in input for this bitplane
-      uint8_t *p = bitplane[backbuf_id][plane] +
-                   y * 32;  // bitplane location to write to
+          (1 << (8 - BITPLANE_CNT + plane));  // bitmask for pixel data in input for this bitplane
+      uint8_t *p = bitplane[backbuf_id][plane] + y * 32;  // bitplane location to write to
       for (int fx = 0; fx < 32; fx++) {
         int x = fx ^ 2;  // Apply correction. this fixes dma byte stream order
         int v = lbits;
@@ -117,8 +115,7 @@ void render16() {
 void displayTask(void *pvParameter) {
   TickType_t xLastWakeTime = xTaskGetTickCount();
   while (driver_hub75_active) {
-    vTaskDelayUntil(&xLastWakeTime,
-                    1.0 / framerate * 1000 / portTICK_PERIOD_MS);
+    vTaskDelayUntil(&xLastWakeTime, 1.0 / framerate * 1000 / portTICK_PERIOD_MS);
     if (compositor_status())
       composite();
     render16();
@@ -145,8 +142,7 @@ esp_err_t driver_hub75_init(void) {
 
   for (int i = 0; i < BITPLANE_CNT; i++) {
     for (int j = 0; j < 2; j++) {
-      bitplane[j][i] = (uint8_t *)heap_caps_calloc(BITPLANE_SZ, sizeof(uint8_t),
-                                                   MALLOC_CAP_DMA);
+      bitplane[j][i] = (uint8_t *)heap_caps_calloc(BITPLANE_SZ, sizeof(uint8_t), MALLOC_CAP_DMA);
       if (!bitplane[j][i]) {
         ESP_LOGE(TAG, "Can't allocate bitplane memory");
         return ESP_FAIL;
@@ -190,14 +186,13 @@ esp_err_t driver_hub75_init(void) {
 
   driver_hub75_active = true;
 
-  xTaskCreatePinnedToCore(
-      &displayTask, /* Task function. */
-      "display",    /* String with name of task. */
-      1024,         /* Stack size in words. */
-      NULL,         /* Parameter passed as input of the task */
-      1,            /* Priority of the task. (Lower = more important) */
-      NULL,         /* Task handle. */
-      1             /* Core ID */
+  xTaskCreatePinnedToCore(&displayTask, /* Task function. */
+                          "display",    /* String with name of task. */
+                          1024,         /* Stack size in words. */
+                          NULL,         /* Parameter passed as input of the task */
+                          1,            /* Priority of the task. (Lower = more important) */
+                          NULL,         /* Task handle. */
+                          1             /* Core ID */
   );
 
   driver_hub75_init_done = true;

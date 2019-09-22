@@ -114,12 +114,7 @@ volatile static character font_6x3[] = {
     {3, {0b001, 0b010, 0b100, 0b010, 0b001, 0b000}}             // <-
 };
 
-void renderChar_6x3(uint8_t charId,
-                    Color color,
-                    int *x,
-                    int y,
-                    int endX,
-                    int *skip);
+void renderChar_6x3(uint8_t charId, Color color, int *x, int y, int endX, int *skip);
 int getCharWidth_6x3(uint8_t charId);
 
 #endif  // NEW_ESP32_FIRMWARE_FONT_6X3_H

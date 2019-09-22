@@ -58,14 +58,11 @@
 #define ILI9341_RDDISBV   0x52  // Get Display Brightness
 #define ILI9341_WRCTRLD   0x53  // Set Display Control
 #define ILI9341_RDCTRLD   0x54  // Get Display Control
-#define ILI9341_WRCACE \
-  0x55  // Write content adaptive brightness control and Color enhancement
-#define ILI9341_RDCABC \
-  0x56  // Read content adaptive brightness control and Color enhancement
-#define ILI9341_WRCABCMB 0x5E  // Write CABC minimum brightness
-#define ILI9341_RDCABCMB 0x5F  // Read CABC minimum brightness
-#define ILI9341_RDABCSDR \
-  0x68  // Read Automatic Brightness Control Self-Diagnostic Result
+#define ILI9341_WRCACE    0x55  // Write content adaptive brightness control and Color enhancement
+#define ILI9341_RDCABC    0x56  // Read content adaptive brightness control and Color enhancement
+#define ILI9341_WRCABCMB  0x5E  // Write CABC minimum brightness
+#define ILI9341_RDCABCMB  0x5F  // Read CABC minimum brightness
+#define ILI9341_RDABCSDR  0x68  // Read Automatic Brightness Control Self-Diagnostic Result
 #define ILI9341_PORCTRK   0xB2  // Porch setting
 #define ILI9341_GCTRL     0xB7  // Gate Control
 #define ILI9341_VCOMS     0xBB  // VCOM setting

@@ -9,12 +9,7 @@
 
 #ifdef CONFIG_DRIVER_HUB75_ENABLE
 
-void renderChar_6x3(uint8_t charId,
-                    Color color,
-                    int *x,
-                    int y,
-                    int endX,
-                    int *skip) {
+void renderChar_6x3(uint8_t charId, Color color, int *x, int y, int endX, int *skip) {
   character toDraw = font_6x3[charId];
 
   for (int col = 0; col < toDraw.width; col++) {
@@ -27,8 +22,8 @@ void renderChar_6x3(uint8_t charId,
       int8_t targetRow = y + row;
       int8_t targetCol = *x + col;
 
-      if (targetCol >= CONFIG_HUB75_WIDTH || targetRow >= CONFIG_HUB75_HEIGHT ||
-          targetCol < 0 || targetRow < 0) {
+      if (targetCol >= CONFIG_HUB75_WIDTH || targetRow >= CONFIG_HUB75_HEIGHT || targetCol < 0 ||
+          targetRow < 0) {
         continue;
       }
 

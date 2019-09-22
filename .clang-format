@@ -5,6 +5,7 @@ AlignConsecutiveMacros: 'true'
 AlignOperands: 'true'
 AllowShortBlocksOnASingleLine: 'false'
 AllowShortFunctionsOnASingleLine: Empty
+ColumnLimit: 100
 Language: Cpp
 PointerAlignment: Right
 ReflowComments: 'true'

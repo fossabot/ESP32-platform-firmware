@@ -48,8 +48,7 @@ enum Orientation driver_framebuffer_get_orientation(Window *window) {
   return *orientation;
 }
 
-void driver_framebuffer_set_orientation(Window *window,
-                                        enum Orientation newOrientation) {
+void driver_framebuffer_set_orientation(Window *window, enum Orientation newOrientation) {
   enum Orientation *orientation = _getOrientationContext(window);
   *orientation                  = newOrientation;
 }
@@ -116,9 +115,7 @@ void driver_framebuffer_set_orientation_angle(Window *window, uint16_t angle) {
 #endif
 }
 
-bool driver_framebuffer_orientation_apply(Window *window,
-                                          int16_t *x,
-                                          int16_t *y) {
+bool driver_framebuffer_orientation_apply(Window *window, int16_t *x, int16_t *y) {
   enum Orientation *orientation = _getOrientationContext(window);
   int16_t width, height;
   _getSizeContext(window, &width, &height);
@@ -126,15 +123,13 @@ bool driver_framebuffer_orientation_apply(Window *window,
   int16_t oldx = *x;
   int16_t oldy = *y;
 
-  if (*orientation == portrait ||
-      *orientation == reverse_portrait) {  // 90 degrees
+  if (*orientation == portrait || *orientation == reverse_portrait) {  // 90 degrees
     int16_t t = *y;
     *y        = *x;
     *x        = (width - 1) - t;
   }
 
-  if (*orientation == reverse_landscape ||
-      *orientation == portrait) {  // 180 degrees
+  if (*orientation == reverse_landscape || *orientation == portrait) {  // 180 degrees
     *y = (height - 1) - *y;
     *x = (width - 1) - *x;
   }
@@ -155,24 +150,20 @@ bool driver_framebuffer_orientation_apply(Window *window,
   return (*x >= 0) && (*x < width) && (*y >= 0) && (*y < height);
 }
 
-void driver_framebuffer_orientation_revert(Window *window,
-                                           int16_t *x,
-                                           int16_t *y) {
+void driver_framebuffer_orientation_revert(Window *window, int16_t *x, int16_t *y) {
   enum Orientation *orientation = _getOrientationContext(window);
   int16_t width, height;
   _getSizeContext(window, &width, &height);
 
   // printf("Orientation revert %u, %u\n", *x, *y);
 
-  if (*orientation == reverse_landscape ||
-      *orientation == portrait) {  // 90 degrees
+  if (*orientation == reverse_landscape || *orientation == portrait) {  // 90 degrees
     int16_t t = *x;
     *x        = *y;
     *y        = (width - 1) - t;
   }
 
-  if (*orientation == portrait ||
-      *orientation == reverse_portrait) {  // 180 degrees
+  if (*orientation == portrait || *orientation == reverse_portrait) {  // 180 degrees
     *y = (height - 1) - *y;
     *x = (width - 1) - *x;
   }
@@ -187,8 +178,7 @@ void driver_framebuffer_orientation_revert_square(Window *window,
   int16_t width, height;
   _getSizeContext(window, &width, &height);
 
-  if (*orientation == reverse_landscape ||
-      *orientation == portrait) {  // 90 degrees
+  if (*orientation == reverse_landscape || *orientation == portrait) {  // 90 degrees
     int16_t tx0 = *x0;
     int16_t ty0 = *y0;
     *x0         = width - *x1 - 1;
@@ -201,8 +191,7 @@ void driver_framebuffer_orientation_revert_square(Window *window,
     // printf("y1 = %d - %d - 1\n", height, ty0);
   }
 
-  if (*orientation == portrait ||
-      *orientation == reverse_portrait) {  // 180 degrees
+  if (*orientation == portrait || *orientation == reverse_portrait) {  // 180 degrees
     int16_t tx0 = *x0;
     int16_t tx1 = *x1;
     int16_t ty1 = *y1;
@@ -213,9 +202,7 @@ void driver_framebuffer_orientation_revert_square(Window *window,
   }
 }
 
-void driver_framebuffer_get_orientation_size(Window *window,
-                                             int16_t *width,
-                                             int16_t *height) {
+void driver_framebuffer_get_orientation_size(Window *window, int16_t *width, int16_t *height) {
   enum Orientation *orientation = _getOrientationContext(window);
   if ((*orientation == portrait) || (*orientation == reverse_portrait)) {
     _getSizeContext(window, height, width);  // Swapped

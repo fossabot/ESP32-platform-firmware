@@ -11,11 +11,10 @@
 #define C_SM 0xFFFFFFFF
 
 static uint32_t smiley[] = {
-    0,    0,    C_SM, C_SM, C_SM, C_SM, 0,    0,    0,    C_SM, 0,    0,    0,
-    0,    C_SM, 0,    C_SM, 0,    C_SM, 0,    0,    C_SM, 0,    C_SM, C_SM, 0,
-    0,    0,    0,    0,    0,    C_SM, C_SM, 0,    0,    C_SM, C_SM, 0,    0,
-    C_SM, C_SM, 0,    C_SM, 0,    0,    C_SM, 0,    C_SM, 0,    C_SM, 0,    0,
-    0,    0,    C_SM, 0,    0,    0,    C_SM, C_SM, C_SM, C_SM, 0,    0};
+    0,    0,    C_SM, C_SM, C_SM, C_SM, 0,    0,    0,    C_SM, 0,    0,    0,    0,    C_SM, 0,
+    C_SM, 0,    C_SM, 0,    0,    C_SM, 0,    C_SM, C_SM, 0,    0,    0,    0,    0,    0,    C_SM,
+    C_SM, 0,    0,    C_SM, C_SM, 0,    0,    C_SM, C_SM, 0,    C_SM, 0,    0,    C_SM, 0,    C_SM,
+    0,    C_SM, 0,    0,    0,    0,    C_SM, 0,    0,    0,    C_SM, C_SM, C_SM, C_SM, 0,    0};
 
 bool enabled = true;
 
@@ -24,26 +23,15 @@ Color *buffer;
 renderTask_t *head = NULL;
 
 #define N_FONTS 2
-int font_index                           = 0;
-void (*font_render_char[])(uint8_t charId,
-                           Color color,
-                           int *x,
-                           int y,
-                           int endX,
-                           int *skip)    = {&renderChar_7x5, &renderChar_6x3};
-int (*font_char_width[])(uint8_t charId) = {&getCharWidth_7x5,
-                                            &getCharWidth_6x3};
+int font_index                                                                              = 0;
+void (*font_render_char[])(uint8_t charId, Color color, int *x, int y, int endX, int *skip) = {
+    &renderChar_7x5, &renderChar_6x3};
+int (*font_char_width[])(uint8_t charId) = {&getCharWidth_7x5, &getCharWidth_6x3};
 
 void addTask(renderTask_t *node);
 void renderImage(uint8_t *image, int x, int y, int sizeX, int sizeY);
 void renderCharCol(uint8_t ch, Color color, int x, int y);
-void renderText(char *text,
-                Color color,
-                int x,
-                int y,
-                int sizeX,
-                int skip,
-                bool firstshow);
+void renderText(char *text, Color color, int x, int y, int sizeX, int skip, bool firstshow);
 
 Color genColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
   Color color;
@@ -125,11 +113,7 @@ void compositor_addText(char *text, Color color, int x, int y) {
  * character is 8 pixels high and 5 pixels wide sizeX is the length over which
  * text should be drawn
  */
-void compositor_addScrollText(char *text,
-                              Color color,
-                              int x,
-                              int y,
-                              int sizeX) {
+void compositor_addScrollText(char *text, Color color, int x, int y, int sizeX) {
   char *text_store = malloc(strlen(text) + 1);
   strcpy(text_store, text);
   scrollText_t *scroll = (scrollText_t *)malloc(sizeof(scrollText_t));
@@ -175,12 +159,7 @@ void compositor_addImage(uint8_t *image, int x, int y, int width, int length) {
  * width, length is width and length of the image
  * numframes is the number of frames in the animation
  */
-void compositor_addAnimation(uint8_t *image,
-                             int x,
-                             int y,
-                             int width,
-                             int length,
-                             int numFrames) {
+void compositor_addAnimation(uint8_t *image, int x, int y, int width, int length, int numFrames) {
   animation_t *gif   = (animation_t *)malloc(sizeof(animation_t));
   gif->gif           = image;
   gif->showFrame     = 0;
@@ -211,22 +190,14 @@ void renderImage(uint8_t *image, int x, int y, int sizeX, int sizeY) {
     yreal = y + py;
     for (int px = 0; px < sizeX; px++) {
       xreal = x + px;
-      if (yreal >= 0 && yreal < CONFIG_HUB75_HEIGHT && xreal >= 0 &&
-          xreal < CONFIG_HUB75_WIDTH) {
-        compositor_setPixel(xreal, yreal,
-                            *((Color *)&image[(py * sizeX + px) * 4]));
+      if (yreal >= 0 && yreal < CONFIG_HUB75_HEIGHT && xreal >= 0 && xreal < CONFIG_HUB75_WIDTH) {
+        compositor_setPixel(xreal, yreal, *((Color *)&image[(py * sizeX + px) * 4]));
       }
     }
   }
 }
 
-void renderText(char *text,
-                Color color,
-                int x,
-                int y,
-                int sizeX,
-                int skip,
-                bool firstshow) {
+void renderText(char *text, Color color, int x, int y, int sizeX, int skip, bool firstshow) {
   int endX = sizeX > 0 ? x + sizeX : CONFIG_HUB75_WIDTH - 1;
   if (skip < 0) {
     if (!firstshow) {
@@ -293,15 +264,13 @@ void composite() {
   renderTask_t *node = head;
   while (node != NULL) {
     if (node->id == 0) {  // Render text
-      renderText((char *)node->payload, node->color, node->x, node->y, -1, 0,
-                 false);
+      renderText((char *)node->payload, node->color, node->x, node->y, -1, 0, false);
     } else if (node->id == 1) {  // Render image
-      renderImage((uint8_t *)node->payload, node->x, node->y, node->sizeX,
-                  node->sizeY);
+      renderImage((uint8_t *)node->payload, node->x, node->y, node->sizeX, node->sizeY);
     } else if (node->id == 2) {  // Render scrolling text
       scrollText_t *scroll = (scrollText_t *)node->payload;
-      renderText(scroll->text, node->color, node->x, node->y, node->sizeX,
-                 scroll->skip, scroll->firstshow);
+      renderText(scroll->text, node->color, node->x, node->y, node->sizeX, scroll->skip,
+                 scroll->firstshow);
       scroll->skip++;
       if (scroll->skip == strlen(scroll->text) * 6 + 6) {
         scroll->skip      = -node->sizeX;
@@ -310,8 +279,7 @@ void composite() {
     } else if (node->id == 3) {  // Render animation
       animation_t *gif = (animation_t *)node->payload;
       int index        = node->sizeX * node->sizeY * 4 * gif->showFrame;
-      renderImage(&(gif->gif[index]), node->x, node->y, node->sizeX,
-                  node->sizeY);
+      renderImage(&(gif->gif[index]), node->x, node->y, node->sizeX, node->sizeY);
       gif->showFrame++;
       if (gif->showFrame == gif->numberFrames)
         gif->showFrame = 0;

@@ -28,8 +28,7 @@ driver_disobey_samd_intr_t driver_disobey_samd_handler = NULL;
 
 int driver_disobey_samd_read_state() {
   uint8_t state[2];
-  esp_err_t res =
-      driver_i2c_read_reg(CONFIG_I2C_ADDR_DISOBEY_SAMD, 0, state, 2);
+  esp_err_t res = driver_i2c_read_reg(CONFIG_I2C_ADDR_DISOBEY_SAMD, 0, state, 2);
 
   if (res != ESP_OK) {
     ESP_LOGE(TAG, "i2c read state error %d", res);
@@ -57,10 +56,8 @@ int driver_disobey_samd_read_battery() {
   return driver_disobey_samd_read_state() >> 8 & 0xFF;
 }
 
-static inline esp_err_t driver_disobey_samd_write_reg(uint8_t reg,
-                                                      uint8_t value) {
-  esp_err_t res =
-      driver_i2c_write_reg(CONFIG_I2C_ADDR_DISOBEY_SAMD, reg, value);
+static inline esp_err_t driver_disobey_samd_write_reg(uint8_t reg, uint8_t value) {
+  esp_err_t res = driver_i2c_write_reg(CONFIG_I2C_ADDR_DISOBEY_SAMD, reg, value);
 
   if (res != ESP_OK) {
     ESP_LOGE(TAG, "i2c write reg(0x%02x, 0x%02x): error %d", reg, value, res);
@@ -72,10 +69,8 @@ static inline esp_err_t driver_disobey_samd_write_reg(uint8_t reg,
   return res;
 }
 
-static inline esp_err_t driver_disobey_samd_write_reg32(uint8_t reg,
-                                                        uint32_t value) {
-  esp_err_t res =
-      driver_i2c_write_reg32(CONFIG_I2C_ADDR_DISOBEY_SAMD, reg, value);
+static inline esp_err_t driver_disobey_samd_write_reg32(uint8_t reg, uint32_t value) {
+  esp_err_t res = driver_i2c_write_reg32(CONFIG_I2C_ADDR_DISOBEY_SAMD, reg, value);
 
   if (res != ESP_OK) {
     ESP_LOGE(TAG, "i2c write reg32(0x%08x, 0x%02x): error %d", reg, value, res);
@@ -91,16 +86,12 @@ esp_err_t driver_disobey_samd_write_backlight(uint8_t value) {
   return driver_disobey_samd_write_reg(disobey_samd_CMD_BACKLIGHT, value);
 }
 
-esp_err_t driver_disobey_samd_write_led(uint8_t led,
-                                        uint8_t r,
-                                        uint8_t g,
-                                        uint8_t b) {
+esp_err_t driver_disobey_samd_write_led(uint8_t led, uint8_t r, uint8_t g, uint8_t b) {
   uint32_t value = led + (r << 8) + (g << 16) + (b << 24);
   return driver_disobey_samd_write_reg32(disobey_samd_CMD_LED, value);
 }
 
-esp_err_t driver_disobey_samd_write_buzzer(uint16_t freqency,
-                                           uint16_t duration) {
+esp_err_t driver_disobey_samd_write_buzzer(uint16_t freqency, uint16_t duration) {
   uint32_t value = freqency + (duration << 16);
   return driver_disobey_samd_write_reg32(disobey_samd_CMD_BUZZER, value);
 }
@@ -157,8 +148,7 @@ void driver_disobey_samd_intr_handler(void *arg) { /* in interrupt handler */
 #ifdef CONFIG_DRIVER_DISOBEY_SAMD_DEBUG
   static int gpio_last_state = -1;
   if (gpio_state != -1 && gpio_last_state != gpio_state) {
-    ets_printf("driver_disobey_samd: I2C Int %s\n",
-               gpio_state == 0 ? "up" : "down");
+    ets_printf("driver_disobey_samd: I2C Int %s\n", gpio_state == 0 ? "up" : "down");
   }
   gpio_last_state = gpio_state;
 #endif  // CONFIG_SHA_DRIVER_disobey_samd_DEBUG
@@ -186,8 +176,8 @@ esp_err_t driver_disobey_samd_init(void) {
   if (driver_disobey_samd_intr_trigger == NULL)
     return ESP_ERR_NO_MEM;
 
-  res = gpio_isr_handler_add(CONFIG_PIN_NUM_DISOBEY_SAMD_INT,
-                             driver_disobey_samd_intr_handler, NULL);
+  res =
+      gpio_isr_handler_add(CONFIG_PIN_NUM_DISOBEY_SAMD_INT, driver_disobey_samd_intr_handler, NULL);
   if (res != ESP_OK)
     return res;
 
@@ -201,19 +191,16 @@ esp_err_t driver_disobey_samd_init(void) {
   res = gpio_config(&io_conf);
   if (res != ESP_OK)
     return res;
-  xTaskCreate(&driver_disobey_samd_intr_task, "disobey_samd interrupt task",
-              4096, NULL, 10, NULL);
+  xTaskCreate(&driver_disobey_samd_intr_task, "disobey_samd interrupt task", 4096, NULL, 10, NULL);
   xSemaphoreGive(driver_disobey_samd_intr_trigger);
   driver_disobey_samd_init_done = true;
   ESP_LOGD(TAG, "init done");
   return ESP_OK;
 }
 
-void driver_disobey_samd_set_interrupt_handler(
-    driver_disobey_samd_intr_t handler) {
-  if (driver_disobey_samd_mux ==
-      NULL) {  // allow setting handler when driver_disobey_samd is not
-               // initialized yet.
+void driver_disobey_samd_set_interrupt_handler(driver_disobey_samd_intr_t handler) {
+  if (driver_disobey_samd_mux == NULL) {  // allow setting handler when driver_disobey_samd is not
+                                          // initialized yet.
     driver_disobey_samd_handler = handler;
   } else {
     xSemaphoreTake(driver_disobey_samd_mux, portMAX_DELAY);
@@ -222,8 +209,7 @@ void driver_disobey_samd_set_interrupt_handler(
   }
 }
 
-esp_err_t driver_disobey_samd_get_touch_info(
-    struct driver_disobey_samd_touch_info *info) {
+esp_err_t driver_disobey_samd_get_touch_info(struct driver_disobey_samd_touch_info *info) {
   int value = driver_disobey_samd_read_touch();
   if (value == -1)
     return ESP_FAIL;  // need more-specific error?

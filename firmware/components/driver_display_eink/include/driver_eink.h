@@ -57,8 +57,7 @@ struct driver_eink_update {
  * @param buf the raw buffer to write to the screen
  * @param upd_conf the config-settings to use
  */
-extern void driver_eink_update(const uint32_t *buf,
-                               const struct driver_eink_update *upd_conf);
+extern void driver_eink_update(const uint32_t *buf, const struct driver_eink_update *upd_conf);
 
 /** driver_eink_display flags settings */
 typedef int driver_eink_flags_t;

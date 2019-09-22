@@ -72,10 +72,9 @@ static esp_err_t driver_gxgde0213b1_claim_spi(void) {
       .spics_io_num   = CONFIG_PIN_NUM_GXGDE0213B1_CS,
       .queue_size     = 1,
       .flags          = (SPI_DEVICE_HALFDUPLEX | SPI_DEVICE_3WIRE),
-      .pre_cb =
-          driver_gxgde0213b1_spi_pre_transfer_callback,  // Specify pre-transfer
-                                                         // callback to handle
-                                                         // D/C line
+      .pre_cb         = driver_gxgde0213b1_spi_pre_transfer_callback,  // Specify pre-transfer
+                                                                       // callback to handle
+                                                                       // D/C line
   };
   res = spi_bus_add_device(VSPI_HOST, &devcfg, &spi_bus);
   if (res != ESP_OK)
@@ -87,16 +86,13 @@ static esp_err_t driver_gxgde0213b1_claim_spi(void) {
 const uint8_t gxgde0213b1_init_data[] = {
     0x01, 3,    249,  0x00, 0x00,  // GDOControl
     0x0c, 3,    0xd7, 0xd6, 0x9d,  // softstart
-    0x2c, 1,    0xa8, 0x3a, 1,    0x1a, 0x3b, 1,    0x08, 0x11, 1,
-    0x01, 0x44, 2,    0x00, 0x0f, 0x45, 4,    249,  0,    0,    0,
-    0x4e, 1,    0,    0x4f, 2,    249,  0,    0x32, 29,   0x22, 0x55,
-    0xAA, 0x55, 0xAA, 0x55, 0xAA, 0x11, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x1E, 0x1E, 0x1E, 0x1E, 0x1E, 0x1E, 0x1E, 0x1E,
-    0x01, 0x00, 0x00, 0x00, 0x00, 0x22, 1,    0xc0, 0x20, 0,    0x00};
+    0x2c, 1,    0xa8, 0x3a, 1,    0x1a, 0x3b, 1,    0x08, 0x11, 1,    0x01, 0x44, 2,
+    0x00, 0x0f, 0x45, 4,    249,  0,    0,    0,    0x4e, 1,    0,    0x4f, 2,    249,
+    0,    0x32, 29,   0x22, 0x55, 0xAA, 0x55, 0xAA, 0x55, 0xAA, 0x11, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x1E, 0x1E, 0x1E, 0x1E, 0x1E, 0x1E, 0x1E, 0x01,
+    0x00, 0x00, 0x00, 0x00, 0x22, 1,    0xc0, 0x20, 0,    0x00};
 
-esp_err_t driver_gxgde0213b1_send(const uint8_t *data,
-                                  int len,
-                                  const uint8_t dc_level) {
+esp_err_t driver_gxgde0213b1_send(const uint8_t *data, int len, const uint8_t dc_level) {
   if (len == 0)
     return ESP_OK;
   esp_err_t res = driver_gxgde0213b1_claim_spi();
@@ -111,9 +107,7 @@ esp_err_t driver_gxgde0213b1_send(const uint8_t *data,
   return res;
 }
 
-esp_err_t driver_gxgde0213b1_receive(uint8_t *data,
-                                     int len,
-                                     const uint8_t dc_level) {
+esp_err_t driver_gxgde0213b1_receive(uint8_t *data, int len, const uint8_t dc_level) {
   if (len == 0)
     return ESP_OK;
   esp_err_t res = driver_gxgde0213b1_claim_spi();
@@ -197,8 +191,7 @@ esp_err_t driver_gxgde0213b1_init(void) {
     return res;
 
   // Allocate partial update buffer
-  internalBuffer =
-      heap_caps_malloc(GXGDE0213B1_MAX_TRANSFERSIZE, MALLOC_CAP_8BIT);
+  internalBuffer = heap_caps_malloc(GXGDE0213B1_MAX_TRANSFERSIZE, MALLOC_CAP_8BIT);
   if (!internalBuffer)
     return ESP_FAIL;
 

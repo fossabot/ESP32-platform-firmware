@@ -57,9 +57,7 @@ inline void _remove_window_from_linked_list(
 
 /* Public functions */
 
-Window *driver_framebuffer_window_create(const char *name,
-                                         uint16_t width,
-                                         uint16_t height) {
+Window *driver_framebuffer_window_create(const char *name, uint16_t width, uint16_t height) {
   if (driver_framebuffer_window_find(name))
     return NULL;  // If the window already exists do nothing and return.
   Window *window = _create_window();
@@ -70,8 +68,7 @@ Window *driver_framebuffer_window_create(const char *name,
   window->buffer = heap_caps_malloc(((width * height * PIXEL_SIZE) / 8) + 1,
                                     MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
 #else
-  window->buffer = heap_caps_malloc(((width * height * PIXEL_SIZE) / 8) + 1,
-                                    MALLOC_CAP_8BIT);
+  window->buffer = heap_caps_malloc(((width * height * PIXEL_SIZE) / 8) + 1, MALLOC_CAP_8BIT);
 #endif
   window->_prevWindow      = driver_framebuffer_window_last();
   window->_nextWindow      = NULL;
@@ -90,8 +87,7 @@ void driver_framebuffer_window_remove(Window *window) {
 Window *driver_framebuffer_window_find(const char *name) {
   Window *currentWindow = windows;
   while (currentWindow != NULL) {
-    if ((strlen(name) == strlen(currentWindow->name)) &&
-        (strcmp(currentWindow->name, name) == 0)) {
+    if ((strlen(name) == strlen(currentWindow->name)) && (strcmp(currentWindow->name, name) == 0)) {
       return currentWindow;
     }
     currentWindow = currentWindow->_nextWindow;
@@ -120,9 +116,7 @@ void driver_framebuffer_window_focus(Window *window) {
   window->_nextWindow = NULL;
 }
 
-void driver_framebuffer_window_getSize(Window *window,
-                                       int16_t *width,
-                                       int16_t *height) {
+void driver_framebuffer_window_getSize(Window *window, int16_t *width, int16_t *height) {
   if (window == NULL) {
     // No window provided, use global context
     *width  = FB_WIDTH;

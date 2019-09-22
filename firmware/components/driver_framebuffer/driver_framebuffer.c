@@ -79,23 +79,18 @@ esp_err_t driver_framebuffer_init() {
   driver_framebuffer_fill(NULL, COLOR_FILL_DEFAULT);  // 1st framebuffer
 
 #ifdef CONFIG_DRIVER_HUB75_ENABLE
-  driver_hub75_switch_buffer(
-      framebuffer);  // Needed to make the legacy compositor work.
+  driver_hub75_switch_buffer(framebuffer);  // Needed to make the legacy compositor work.
 #endif
 
   // driver_framebuffer_flush(FB_FLAG_FORCE | FB_FLAG_FULL);
   // driver_framebuffer_fill(NULL, COLOR_FILL_DEFAULT); //2nd framebuffer
-  driver_framebuffer_set_orientation_angle(
-      NULL, 0);  // Apply global orientation (needed for flip)
+  driver_framebuffer_set_orientation_angle(NULL, 0);  // Apply global orientation (needed for flip)
   driver_framebuffer_init_done = true;
   ESP_LOGD(TAG, "init done");
   return ESP_OK;
 }
 
-bool _getFrameContext(Window *window,
-                      uint8_t **buffer,
-                      int16_t *width,
-                      int16_t *height) {
+bool _getFrameContext(Window *window, uint8_t **buffer, int16_t *width, int16_t *height) {
   if (window == NULL) {
     // No window provided, use global context
     *width  = FB_WIDTH;
@@ -122,8 +117,7 @@ void driver_framebuffer_fill(Window *window, uint32_t value) {
     driver_framebuffer_set_dirty_area(0, 0, width - 1, height - 1, true);
 
 #if defined(FB_TYPE_1BPP)
-  memset(buffer, greyToBw(rgbToGrey(value)) ? 0xFF : 0x00,
-         (width * height) / 8);
+  memset(buffer, greyToBw(rgbToGrey(value)) ? 0xFF : 0x00, (width * height) / 8);
 #elif defined(FB_TYPE_8BPP)
   memset(buffer, rgbToGrey(value), width * height);
 #elif defined(FB_TYPE_16BPP)
@@ -159,10 +153,7 @@ void driver_framebuffer_fill(Window *window, uint32_t value) {
 #endif
 }
 
-void driver_framebuffer_setPixel(Window *window,
-                                 int16_t x,
-                                 int16_t y,
-                                 uint32_t value) {
+void driver_framebuffer_setPixel(Window *window, int16_t x, int16_t y, uint32_t value) {
   uint8_t *buffer;
   int16_t width, height;
   if (!_getFrameContext(window, &buffer, &width, &height))
@@ -222,8 +213,7 @@ void driver_framebuffer_setPixel(Window *window,
   uint8_t g         = (value >> 8) & 0xFF;
   uint8_t b         = value & 0xFF;
   uint32_t position = (y * width * 3) + (x * 3);
-  if (buffer[position + 0] != r || buffer[position + 1] != g ||
-      buffer[position + 2] != b)
+  if (buffer[position + 0] != r || buffer[position + 1] != g || buffer[position + 2] != b)
     changed = true;
   buffer[position + 0] = r;
   buffer[position + 1] = g;
@@ -234,8 +224,8 @@ void driver_framebuffer_setPixel(Window *window,
   uint8_t g         = (value >> 8) & 0xFF;
   uint8_t b         = value & 0xFF;
   uint32_t position = (y * width * 4) + (x * 4);
-  if (buffer[position + 0] != a || buffer[position + 1] != b ||
-      buffer[position + 2] != g || buffer[position + 3] != r)
+  if (buffer[position + 0] != a || buffer[position + 1] != b || buffer[position + 2] != g ||
+      buffer[position + 3] != r)
     changed = true;
   buffer[position + 0] = a;
   buffer[position + 1] = b;
@@ -294,12 +284,11 @@ uint32_t driver_framebuffer_getPixel(Window *window, int16_t x, int16_t y) {
   return r << 16 | g << 8 | b;
 #elif defined(FB_TYPE_24BPP)
   uint32_t position    = (y * width * 3) + (x * 3);
-  return (buffer[position + 2] << 16) + (buffer[position + 1] << 8) +
-         (buffer[position + 0]);
+  return (buffer[position + 2] << 16) + (buffer[position + 1] << 8) + (buffer[position + 0]);
 #elif defined(FB_TYPE_32BPP)
   uint32_t position    = (y * width * 4) + (x * 4);
-  return (buffer[position] << 24) + (buffer[position + 3] << 16) +
-         (buffer[position + 2] << 8) + (buffer[position + 1]);
+  return (buffer[position] << 24) + (buffer[position + 3] << 16) + (buffer[position + 2] << 8) +
+         (buffer[position + 1]);
 #else
 #error "No framebuffer type configured."
 #endif
@@ -316,9 +305,8 @@ bool driver_framebuffer_flush(uint32_t flags) {
     if (currentWindow->visible) {
       for (uint16_t wy = 0; wy < currentWindow->height; wy++) {
         for (uint16_t wx = 0; wx < currentWindow->width; wx++) {
-          driver_framebuffer_setPixel(
-              NULL, currentWindow->x + wx, currentWindow->y + wy,
-              driver_framebuffer_getPixel(currentWindow, wx, wy));
+          driver_framebuffer_setPixel(NULL, currentWindow->x + wx, currentWindow->y + wy,
+                                      driver_framebuffer_getPixel(currentWindow, wx, wy));
         }
       }
     }
@@ -372,8 +360,7 @@ bool driver_framebuffer_flush(uint32_t flags) {
   } else {
 #endif
     int16_t dirty_x0, dirty_y0, dirty_x1, dirty_y1;
-    driver_framebuffer_get_dirty_area(&dirty_x0, &dirty_y0, &dirty_x1,
-                                      &dirty_y1);
+    driver_framebuffer_get_dirty_area(&dirty_x0, &dirty_y0, &dirty_x1, &dirty_y1);
     // printf("[FB] flushing (%d, %d) to (%d, %d).\n", dirty_x0, dirty_y0,
     // dirty_x1, dirty_y1);
     FB_FLUSH(framebuffer, eink_flags, dirty_x0, dirty_y0, dirty_x1, dirty_y1);
@@ -434,8 +421,8 @@ esp_err_t driver_framebuffer_png(Window *window,
 
   driver_framebuffer_get_orientation_size(window, &screenWidth, &screenHeight);
 
-  res = lib_png_load_image(window, pr, x, y, dst_min_x, dst_min_y,
-                           screenWidth - x, screenHeight - y, screenWidth);
+  res = lib_png_load_image(window, pr, x, y, dst_min_x, dst_min_y, screenWidth - x,
+                           screenHeight - y, screenWidth);
 
   lib_png_destroy(pr);
 

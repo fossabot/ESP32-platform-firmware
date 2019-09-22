@@ -50,8 +50,8 @@ void enbit(uint8_t value) {
 }
 
 int main(int argc, char *argv[]) {
-  int i, j, err, size, dpi = DEFAULT_DPI, first = ' ', last = '~', offset = 0,
-                       bitmapOffset = 0, x, y, byte;
+  int i, j, err, size, dpi = DEFAULT_DPI, first = ' ', last = '~', offset = 0, bitmapOffset = 0, x,
+                       y, byte;
   char *fontName, c, *ptr;
   FT_Library library;
   FT_Face face;
@@ -69,8 +69,7 @@ int main(int argc, char *argv[]) {
   // ' ' (space) and '~', respectively
 
   if (argc < 3) {
-    fprintf(stderr, "Usage: %s fontfile size [dpi] [first] [last] [offset]\n",
-            argv[0]);
+    fprintf(stderr, "Usage: %s fontfile size [dpi] [first] [last] [offset]\n", argv[0]);
     return 1;
   }
 
@@ -92,9 +91,8 @@ int main(int argc, char *argv[]) {
     offset = atoi(argv[6]);
   }
 
-  fprintf(stderr,
-          "%s) SIZE: %u, DPI: %d, FIRST: %d (%c), LAST: %d(%c), OFFSET: %d\n",
-          argv[1], size, dpi, first, first, last, last, offset);
+  fprintf(stderr, "%s) SIZE: %u, DPI: %d, FIRST: %d (%c), LAST: %d(%c), OFFSET: %d\n", argv[1],
+          size, dpi, first, first, last, last, offset);
 
   if (last < first) {
     i     = first;
@@ -141,8 +139,7 @@ int main(int argc, char *argv[]) {
   // support rendering multiple levels of gray in a glyph.
   // See https://github.com/adafruit/Adafruit-GFX-Library/issues/103
   FT_UInt interpreter_version = TT_INTERPRETER_VERSION_35;
-  FT_Property_Set(library, "truetype", "interpreter-version",
-                  &interpreter_version);
+  FT_Property_Set(library, "truetype", "interpreter-version", &interpreter_version);
 
   if ((err = FT_New_Face(library, argv[1], 0, &face))) {
     fprintf(stderr, "Font load error: %d", err);
@@ -224,9 +221,8 @@ int main(int argc, char *argv[]) {
   // Output glyph attributes table (one per character)
   printf("const GFXglyph %sGlyphs[] = {\n", fontName);
   for (i = first, j = 0; i <= last; i++, j++) {
-    printf("  { %5d, %3d, %3d, %3d, %4d, %4d }", table[j].bitmapOffset,
-           table[j].width, table[j].height, table[j].xAdvance, table[j].xOffset,
-           table[j].yOffset);
+    printf("  { %5d, %3d, %3d, %3d, %4d, %4d }", table[j].bitmapOffset, table[j].width,
+           table[j].height, table[j].xAdvance, table[j].xOffset, table[j].yOffset);
     if (i < last) {
       printf(",   // 0x%02X", i);
       if ((i >= ' ') && (i <= '~')) {

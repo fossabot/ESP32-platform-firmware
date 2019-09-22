@@ -72,12 +72,10 @@ static esp_err_t driver_ili9341_claim_spi(void) {
       .mode           = 0,  // SPI mode 0
       .spics_io_num   = CONFIG_PIN_NUM_ILI9341_CS,
       .queue_size     = 1,
-      .flags =
-          (SPI_DEVICE_HALFDUPLEX | SPI_DEVICE_3WIRE),  // SPI_DEVICE_HALFDUPLEX,
-      .pre_cb =
-          driver_ili9341_spi_pre_transfer_callback,  // Specify pre-transfer
-                                                     // callback to handle D/C
-                                                     // line
+      .flags          = (SPI_DEVICE_HALFDUPLEX | SPI_DEVICE_3WIRE),  // SPI_DEVICE_HALFDUPLEX,
+      .pre_cb         = driver_ili9341_spi_pre_transfer_callback,    // Specify pre-transfer
+                                                                     // callback to handle D/C
+                                                                     // line
   };
   res = spi_bus_add_device(VSPI_HOST, &devcfg, &spi_bus);
   if (res != ESP_OK)
@@ -194,9 +192,7 @@ const uint8_t ili9341_init_data[] = {
 #endif
     0x00};
 
-esp_err_t driver_ili9341_send(const uint8_t *data,
-                              int len,
-                              const uint8_t dc_level) {
+esp_err_t driver_ili9341_send(const uint8_t *data, int len, const uint8_t dc_level) {
   if (len == 0)
     return ESP_OK;
   esp_err_t res = driver_ili9341_claim_spi();
@@ -211,9 +207,7 @@ esp_err_t driver_ili9341_send(const uint8_t *data,
   return res;
 }
 
-esp_err_t driver_ili9341_receive(uint8_t *data,
-                                 int len,
-                                 const uint8_t dc_level) {
+esp_err_t driver_ili9341_receive(uint8_t *data, int len, const uint8_t dc_level) {
   if (len == 0)
     return ESP_OK;
   esp_err_t res = driver_ili9341_claim_spi();
@@ -256,10 +250,7 @@ esp_err_t driver_ili9341_send_u32(uint32_t data) {
   return driver_ili9341_send(buffer, 4, true);
 }
 
-esp_err_t driver_ili9341_set_addr_window(uint16_t x,
-                                         uint16_t y,
-                                         uint16_t w,
-                                         uint16_t h) {
+esp_err_t driver_ili9341_set_addr_window(uint16_t x, uint16_t y, uint16_t w, uint16_t h) {
   uint32_t xa = ((uint32_t)x << 16) | (x + w - 1);
   uint32_t ya = ((uint32_t)y << 16) | (y + h - 1);
   esp_err_t res;
@@ -462,16 +453,14 @@ esp_err_t driver_ili9341_init(void) {
 }
 
 esp_err_t driver_ili9341_write(const uint8_t *buffer) {
-  return driver_ili9341_write_partial(buffer, 0, 0, ILI9341_WIDTH,
-                                      ILI9341_HEIGHT);
+  return driver_ili9341_write_partial(buffer, 0, 0, ILI9341_WIDTH, ILI9341_HEIGHT);
 }
 
-esp_err_t driver_ili9341_write_partial_direct(
-    const uint8_t *buffer,
-    uint16_t x0,
-    uint16_t y0,
-    uint16_t x1,
-    uint16_t y1) {  // Without conversion
+esp_err_t driver_ili9341_write_partial_direct(const uint8_t *buffer,
+                                              uint16_t x0,
+                                              uint16_t y0,
+                                              uint16_t x1,
+                                              uint16_t y1) {  // Without conversion
   if (x0 > x1)
     return ESP_FAIL;
   if (y0 > y1)
@@ -485,12 +474,11 @@ esp_err_t driver_ili9341_write_partial_direct(
   return res;
 }
 
-esp_err_t driver_ili9341_write_partial(
-    const uint8_t *frameBuffer,
-    uint16_t x0,
-    uint16_t y0,
-    uint16_t x1,
-    uint16_t y1) {  // With conversion from framebuffer
+esp_err_t driver_ili9341_write_partial(const uint8_t *frameBuffer,
+                                       uint16_t x0,
+                                       uint16_t y0,
+                                       uint16_t x1,
+                                       uint16_t y1) {  // With conversion from framebuffer
   esp_err_t res = ESP_OK;
   if (x0 > x1) {
     printf("X0 %u > X1 %u\n", x0, x1);
@@ -513,12 +501,11 @@ esp_err_t driver_ili9341_write_partial(
       uint16_t lines = h;
       if (lines > ILI9341_MAX_LINES)
         lines = ILI9341_MAX_LINES;
-      esp_err_t res =
-          driver_ili9341_set_addr_window(0, y0, ILI9341_WIDTH, lines);
+      esp_err_t res = driver_ili9341_set_addr_window(0, y0, ILI9341_WIDTH, lines);
       if (res != ESP_OK)
         break;
-      res = driver_ili9341_send(frameBuffer + (y0 * ILI9341_WIDTH) * 2,
-                                ILI9341_WIDTH * lines * 2, true);
+      res = driver_ili9341_send(frameBuffer + (y0 * ILI9341_WIDTH) * 2, ILI9341_WIDTH * lines * 2,
+                                true);
       if (res != ESP_OK)
         break;
       y0 += lines;
@@ -534,8 +521,7 @@ esp_err_t driver_ili9341_write_partial(
         uint32_t internalBufferOffset =
             y * w * 2;  // Current line * width * 2 (because 16-bit per pixel)
         uint32_t frameBufferOffset = (x0 + (y0 + y) * ILI9341_WIDTH) * 2;
-        memcpy(internalBuffer + internalBufferOffset,
-               frameBuffer + frameBufferOffset, w * 2);
+        memcpy(internalBuffer + internalBufferOffset, frameBuffer + frameBufferOffset, w * 2);
         res = driver_ili9341_set_addr_window(x0, y0, w, lines);
         if (res != ESP_OK)
           return res;

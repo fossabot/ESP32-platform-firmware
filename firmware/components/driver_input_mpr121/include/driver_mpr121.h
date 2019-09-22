@@ -67,9 +67,7 @@ extern esp_err_t driver_mpr121_init(void);
  *   these baseline values for inputs 0..7.
  * @return ESP_OK on success; any other value indicates an error
  */
-extern esp_err_t driver_mpr121_configure(const uint32_t *baseline,
-                                         uint8_t press,
-                                         uint8_t release);
+extern esp_err_t driver_mpr121_configure(const uint32_t *baseline, uint8_t press, uint8_t release);
 
 /**
  * Configure interrupt handler for a specific pin.
@@ -95,8 +93,7 @@ extern int driver_mpr121_get_interrupt_status_gpio(void);
  * @param info touch info will be written to this structure.
  * @return ESP_OK on success; any other value indicates an error
  */
-extern esp_err_t driver_mpr121_get_touch_info(
-    struct driver_mpr121_touch_info *info);
+extern esp_err_t driver_mpr121_get_touch_info(struct driver_mpr121_touch_info *info);
 
 /** gpio config settings */
 enum driver_mpr121_gpio_config {
@@ -115,8 +112,7 @@ enum driver_mpr121_gpio_config {
  * @param config the new gpio pin config.
  * @return 0 on success; -1 on error
  */
-extern int driver_mpr121_configure_gpio(int pin,
-                                        enum driver_mpr121_gpio_config config);
+extern int driver_mpr121_configure_gpio(int pin, enum driver_mpr121_gpio_config config);
 
 /**
  * Retrieve the level of a GPIO pin.

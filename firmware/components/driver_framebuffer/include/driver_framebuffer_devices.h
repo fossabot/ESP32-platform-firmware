@@ -23,16 +23,13 @@
 #ifdef CONFIG_DRIVER_EINK_FORCE_1BPP
 #define FB_TYPE_1BPP
 #define FB_1BPP_HORI_INV
-#warning \
-    "Greyscale is disabled because framebuffer is forced to 1 bit-per-pixel!"
+#warning "Greyscale is disabled because framebuffer is forced to 1 bit-per-pixel!"
 #else
 #define FB_TYPE_8BPP
 #define FB_ALPHA_ENABLED
-#define FB_FLUSH_GS(buffer, eink_flags) \
-  driver_eink_display_greyscale(buffer, eink_flags, 16);
+#define FB_FLUSH_GS(buffer, eink_flags) driver_eink_display_greyscale(buffer, eink_flags, 16);
 #endif
-#define FB_FLUSH(buffer, eink_flags, x0, y0, x1, y1) \
-  driver_eink_display(buffer, eink_flags);
+#define FB_FLUSH(buffer, eink_flags, x0, y0, x1, y1) driver_eink_display(buffer, eink_flags);
 //#define FB_FLUSH(buffer,eink_flags,x0,y0,x1,y1)
 // driver_eink_display_part(buffer,eink_flags,x0,x1); //Doesn't work.
 #define COLOR_FILL_DEFAULT 0xFFFFFF
@@ -45,10 +42,9 @@
 #define FB_HEIGHT GXGDE0213B1_HEIGHT
 #define FB_TYPE_1BPP
 #define FB_1BPP_OHS
-#define FB_FLUSH(buffer, eink_flags, x0, y0, x1, y1) \
-  driver_gxgde0213b1_write(buffer);
-#define COLOR_FILL_DEFAULT 0xFFFFFF
-#define COLOR_TEXT_DEFAULT 0x000000
+#define FB_FLUSH(buffer, eink_flags, x0, y0, x1, y1) driver_gxgde0213b1_write(buffer);
+#define COLOR_FILL_DEFAULT                           0xFFFFFF
+#define COLOR_TEXT_DEFAULT                           0x000000
 
 /* OLED display as used on the Disobey 2020 badge */
 #elif defined(CONFIG_DRIVER_SSD1306_ENABLE)
@@ -93,10 +89,9 @@
 #define FB_HEIGHT HUB75_HEIGHT
 #define FB_TYPE_32BPP
 #define FB_ALPHA_ENABLED
-#define FB_FLUSH(buffer, eink_flags, x0, y0, x1, y1) \
-  driver_hub75_switch_buffer(buffer)
-#define COLOR_FILL_DEFAULT 0x000000
-#define COLOR_TEXT_DEFAULT 0xFFFFFF
+#define FB_FLUSH(buffer, eink_flags, x0, y0, x1, y1) driver_hub75_switch_buffer(buffer)
+#define COLOR_FILL_DEFAULT                           0x000000
+#define COLOR_TEXT_DEFAULT                           0xFFFFFF
 
 /* FRI3D 2018 led matrix */
 #elif CONFIG_DRIVER_FRI3D_ENABLE

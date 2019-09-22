@@ -62,9 +62,8 @@ static esp_err_t driver_eink_dev_claim_spi(void) {
   driver_vspi_release_and_claim(driver_eink_dev_release_spi);
 
   static const spi_bus_config_t buscfg = {
-      .mosi_io_num = CONFIG_PIN_NUM_EPD_MOSI,
-      .miso_io_num =
-          -1,  // MISO is not used, we are transferring to the slave only
+      .mosi_io_num     = CONFIG_PIN_NUM_EPD_MOSI,
+      .miso_io_num     = -1,  // MISO is not used, we are transferring to the slave only
       .sclk_io_num     = CONFIG_PIN_NUM_EPD_CLK,
       .quadwp_io_num   = -1,
       .quadhd_io_num   = -1,
@@ -79,12 +78,10 @@ static esp_err_t driver_eink_dev_claim_spi(void) {
       .mode           = 0,  // SPI mode 0
       .spics_io_num   = CONFIG_PIN_NUM_EPD_CS,
       .queue_size     = 1,
-      .flags          = (SPI_DEVICE_HALFDUPLEX |
-                SPI_DEVICE_3WIRE),  // We are sending only in one direction (to
-                                             // the ePaper slave)
-      .pre_cb =
-          driver_spi_pre_transfer_callback,  // Specify pre-transfer callback to
-                                             // handle D/C line
+      .flags = (SPI_DEVICE_HALFDUPLEX | SPI_DEVICE_3WIRE),  // We are sending only in one direction
+                                                            // (to the ePaper slave)
+      .pre_cb = driver_spi_pre_transfer_callback,           // Specify pre-transfer callback to
+                                                            // handle D/C line
   };
 
   res = spi_bus_add_device(VSPI_HOST, &devcfg, &spi_bus);
@@ -159,8 +156,7 @@ void driver_eink_dev_intr_handler(void *arg) { /* in interrupt handler */
 #ifdef CONFIG_DRIVER_EINK_DEBUG
   static int gpio_last_state = -1;
   if (gpio_state != -1 && gpio_last_state != gpio_state) {
-    ets_printf("driver_eink_dev: EPD-Busy Int %s\n",
-               gpio_state == 0 ? "up" : "down");
+    ets_printf("driver_eink_dev: EPD-Busy Int %s\n", gpio_state == 0 ? "up" : "down");
   }
   gpio_last_state = gpio_state;
 #endif  // CONFIG_DRIVER_EINK_DEBUG
@@ -287,8 +283,7 @@ esp_err_t driver_eink_dev_init(enum driver_eink_dev_t dev_type) {
   if (driver_eink_dev_intr_trigger == NULL)
     return ESP_ERR_NO_MEM;
 
-  esp_err_t res = gpio_isr_handler_add(CONFIG_PIN_NUM_EPD_BUSY,
-                                       driver_eink_dev_intr_handler, NULL);
+  esp_err_t res = gpio_isr_handler_add(CONFIG_PIN_NUM_EPD_BUSY, driver_eink_dev_intr_handler, NULL);
   if (res != ESP_OK)
     return res;
 

@@ -13,10 +13,7 @@ typedef struct {
   int sample_rate;
 } mod_ctx_t;
 
-int mod_init_source(const void *data_start,
-                    const void *data_end,
-                    int req_sample_rate,
-                    void **ctx) {
+int mod_init_source(const void *data_start, const void *data_end, int req_sample_rate, void **ctx) {
   mod_ctx_t *mod = calloc(sizeof(mod_ctx_t), 1);
   if (!mod)
     return -1;
@@ -75,10 +72,9 @@ void mod_deinit_source(void *ctx) {
   free(mod);
 }
 
-const sndmixer_source_t sndmixer_source_mod = {
-    .init_source     = mod_init_source,
-    .get_sample_rate = mod_get_sample_rate,
-    .fill_buffer     = mod_fill_buffer,
-    .deinit_source   = mod_deinit_source};
+const sndmixer_source_t sndmixer_source_mod = {.init_source     = mod_init_source,
+                                               .get_sample_rate = mod_get_sample_rate,
+                                               .fill_buffer     = mod_fill_buffer,
+                                               .deinit_source   = mod_deinit_source};
 
 #endif
