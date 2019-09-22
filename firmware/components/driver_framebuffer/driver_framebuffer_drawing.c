@@ -49,11 +49,7 @@ POSSIBILITY OF SUCH DAMAGE.
     b         = t;          \
   }
 
-void driver_framebuffer_line(Window *window,
-                             int16_t x0,
-                             int16_t y0,
-                             int16_t x1,
-                             int16_t y1,
+void driver_framebuffer_line(Window *window, int16_t x0, int16_t y0, int16_t x1, int16_t y1,
                              uint32_t color) {
   int16_t steep = abs(y1 - y0) > abs(x1 - x0);
   if (steep) {
@@ -93,13 +89,8 @@ void driver_framebuffer_line(Window *window,
   }
 }
 
-void driver_framebuffer_rect(Window *window,
-                             int16_t x,
-                             int16_t y,
-                             uint16_t w,
-                             uint16_t h,
-                             bool fill,
-                             uint32_t color) {
+void driver_framebuffer_rect(Window *window, int16_t x, int16_t y, uint16_t w, uint16_t h,
+                             bool fill, uint32_t color) {
   if (fill) {
     for (int16_t i = x; i < x + w; i++) {
       driver_framebuffer_line(window, i, y, i, y + h - 1, color);
@@ -112,14 +103,8 @@ void driver_framebuffer_rect(Window *window,
   }
 }
 
-void driver_framebuffer_circle(Window *window,
-                               int16_t x0,
-                               int16_t y0,
-                               uint16_t r,
-                               uint16_t a0,
-                               uint16_t a1,
-                               bool fill,
-                               uint32_t color) {
+void driver_framebuffer_circle(Window *window, int16_t x0, int16_t y0, uint16_t r, uint16_t a0,
+                               uint16_t a1, bool fill, uint32_t color) {
   int16_t f     = 1 - r;
   int16_t ddF_x = 1;
   int16_t ddF_y = -2 * r;

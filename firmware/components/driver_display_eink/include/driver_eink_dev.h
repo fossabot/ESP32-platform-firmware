@@ -70,9 +70,7 @@ static inline void driver_eink_dev_write_command_p2(uint8_t command, uint8_t par
 }
 
 /** helper method: write command with 3 parameters */
-static inline void driver_eink_dev_write_command_p3(uint8_t command,
-                                                    uint8_t para1,
-                                                    uint8_t para2,
+static inline void driver_eink_dev_write_command_p3(uint8_t command, uint8_t para1, uint8_t para2,
                                                     uint8_t para3) {
   driver_eink_dev_write_command(command);
   driver_eink_dev_write_byte(para1);
@@ -81,11 +79,8 @@ static inline void driver_eink_dev_write_command_p3(uint8_t command,
 }
 
 /** helper method: write command with 4 parameters */
-static inline void driver_eink_dev_write_command_p4(uint8_t command,
-                                                    uint8_t para1,
-                                                    uint8_t para2,
-                                                    uint8_t para3,
-                                                    uint8_t para4) {
+static inline void driver_eink_dev_write_command_p4(uint8_t command, uint8_t para1, uint8_t para2,
+                                                    uint8_t para3, uint8_t para4) {
   driver_eink_dev_write_command(command);
   driver_eink_dev_write_byte(para1);
   driver_eink_dev_write_byte(para2);
@@ -94,13 +89,11 @@ static inline void driver_eink_dev_write_command_p4(uint8_t command,
 }
 
 /** write command with `datalen` data bytes */
-void driver_eink_dev_write_command_stream(uint8_t command,
-                                          const uint8_t *data,
+void driver_eink_dev_write_command_stream(uint8_t command, const uint8_t *data,
                                           unsigned int datalen);
 
 /** write command with `datalen` data dwords */
-void driver_eink_dev_write_command_stream_u32(uint8_t command,
-                                              const uint32_t *data,
+void driver_eink_dev_write_command_stream_u32(uint8_t command, const uint32_t *data,
                                               unsigned int datalen);
 
 __END_DECLS

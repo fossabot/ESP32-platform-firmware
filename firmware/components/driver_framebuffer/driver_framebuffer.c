@@ -383,10 +383,7 @@ bool driver_framebuffer_flush(uint32_t flags) {
   return true;
 }
 
-esp_err_t driver_framebuffer_png(Window *window,
-                                 int16_t x,
-                                 int16_t y,
-                                 lib_reader_read_t reader,
+esp_err_t driver_framebuffer_png(Window *window, int16_t x, int16_t y, lib_reader_read_t reader,
                                  void *reader_p) {
   if (!framebuffer) {
     ESP_LOGE(TAG, "png without alloc!");

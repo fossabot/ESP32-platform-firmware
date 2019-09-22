@@ -106,9 +106,7 @@ static int find_free_channel() {
   return -1;  // nothing found :/
 }
 
-static int init_source(int ch,
-                       const sndmixer_source_t *srcfns,
-                       const void *data_start,
+static int init_source(int ch, const sndmixer_source_t *srcfns, const void *data_start,
                        const void *data_end) {
   int chunksz = srcfns->init_source(data_start, data_end, samplerate, &channel[ch].src_ctx);
   if (chunksz <= 0)

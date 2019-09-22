@@ -169,11 +169,8 @@ void driver_framebuffer_orientation_revert(Window *window, int16_t *x, int16_t *
   }
 }
 
-void driver_framebuffer_orientation_revert_square(Window *window,
-                                                  int16_t *x0,
-                                                  int16_t *y0,
-                                                  int16_t *x1,
-                                                  int16_t *y1) {
+void driver_framebuffer_orientation_revert_square(Window *window, int16_t *x0, int16_t *y0,
+                                                  int16_t *x1, int16_t *y1) {
   enum Orientation *orientation = _getOrientationContext(window);
   int16_t width, height;
   _getSizeContext(window, &width, &height);

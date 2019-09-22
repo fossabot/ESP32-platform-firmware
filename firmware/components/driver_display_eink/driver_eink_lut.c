@@ -137,8 +137,7 @@ static uint8_t driver_eink_lut_conv(uint8_t voltages, enum driver_eink_lut_flags
 
 // GDEH029A1
 int driver_eink_lut_generate_gdeh029a1(const struct driver_eink_lut_entry *list,
-                                       enum driver_eink_lut_flags flags,
-                                       uint8_t *lut) {
+                                       enum driver_eink_lut_flags flags, uint8_t *lut) {
   ESP_LOGD(TAG, "flags = %d.", flags);
 
   memset(lut, 0, 30);
@@ -197,8 +196,7 @@ int driver_eink_lut_generate_gdeh029a1(const struct driver_eink_lut_entry *list,
 
 // DEPG0290B01
 int driver_eink_lut_generate_depg0290b1(const struct driver_eink_lut_entry *list,
-                                        enum driver_eink_lut_flags flags,
-                                        uint8_t *lut) {
+                                        enum driver_eink_lut_flags flags, uint8_t *lut) {
   ESP_LOGD(TAG, "flags = %d.", flags);
 
   memset(lut, 0, 70);
@@ -258,8 +256,7 @@ int driver_eink_lut_generate_depg0290b1(const struct driver_eink_lut_entry *list
 }
 
 int driver_eink_lut_generate(const struct driver_eink_lut_entry *list,
-                             enum driver_eink_lut_flags flags,
-                             uint8_t *lut) {
+                             enum driver_eink_lut_flags flags, uint8_t *lut) {
   if (driver_eink_dev_type == DRIVER_EINK_GDEH029A1) {
     return driver_eink_lut_generate_gdeh029a1(list, flags, lut);
   }

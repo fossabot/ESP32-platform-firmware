@@ -93,18 +93,13 @@ __BEGIN_DECLS
 extern esp_err_t driver_mpu6050_configure_dlpf(uint8_t dlpf);
 extern esp_err_t driver_mpu6050_configure_gyro_range(uint8_t fs_sel);
 extern esp_err_t driver_mpu6050_configure_accel_range(uint8_t afs_sel);
-extern esp_err_t driver_mpu6050_interrupt_configure(bool int_level,
-                                                    bool int_open,
-                                                    bool latch_int_en,
-                                                    bool int_rd_clear,
-                                                    bool fsync_int_level,
-                                                    bool fsync_int_en,
+extern esp_err_t driver_mpu6050_interrupt_configure(bool int_level, bool int_open,
+                                                    bool latch_int_en, bool int_rd_clear,
+                                                    bool fsync_int_level, bool fsync_int_en,
                                                     bool i2c_bypass_en);
-extern esp_err_t driver_mpu6050_interrupt_enable(bool fifo_oflow_en,
-                                                 bool i2c_mst_int_en,
+extern esp_err_t driver_mpu6050_interrupt_enable(bool fifo_oflow_en, bool i2c_mst_int_en,
                                                  bool data_rdy_en);
-extern esp_err_t driver_mpu6050_read_interrupt_status(bool *fifo_oflow_int,
-                                                      bool *i2c_mst_int,
+extern esp_err_t driver_mpu6050_read_interrupt_status(bool *fifo_oflow_int, bool *i2c_mst_int,
                                                       bool *data_rdy_int);
 extern esp_err_t driver_mpu6050_read_accel(int16_t *x, int16_t *y, int16_t *z);
 extern esp_err_t driver_mpu6050_read_gyro(int16_t *x, int16_t *y, int16_t *z);

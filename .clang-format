@@ -5,6 +5,8 @@ AlignConsecutiveMacros: 'true'
 AlignOperands: 'true'
 AllowShortBlocksOnASingleLine: 'false'
 AllowShortFunctionsOnASingleLine: Empty
+BinPackArguments: true
+BinPackParameters: true
 ColumnLimit: 100
 Language: Cpp
 PointerAlignment: Right

@@ -74,14 +74,8 @@ const GFXfont *fontPointers[] = {&org_018pt7b, &fairlight8pt7b, &fairlight12pt7b
                                  &ipane7x5};
 
 /* Private functions */
-void _print_char(Window *window,
-                 unsigned char c,
-                 int16_t x0,
-                 int16_t y0,
-                 uint8_t xScale,
-                 uint8_t yScale,
-                 uint32_t color,
-                 const GFXfont *font) {
+void _print_char(Window *window, unsigned char c, int16_t x0, int16_t y0, uint8_t xScale,
+                 uint8_t yScale, uint32_t color, const GFXfont *font) {
   if ((c < font->first) || (c > font->last)) {
     ESP_LOGE(TAG, "print_char called with unprintable character");
     return;
@@ -115,15 +109,8 @@ void _print_char(Window *window,
   }
 }
 
-void _write(Window *window,
-            uint8_t c,
-            int16_t x0,
-            int16_t *x,
-            int16_t *y,
-            uint8_t xScale,
-            uint8_t yScale,
-            uint32_t color,
-            const GFXfont *font) {
+void _write(Window *window, uint8_t c, int16_t x0, int16_t *x, int16_t *y, uint8_t xScale,
+            uint8_t yScale, uint32_t color, const GFXfont *font) {
   if (font == NULL) {
     ESP_LOGE(TAG, "write called without font");
     return;
@@ -164,13 +151,8 @@ const GFXfont *driver_framebuffer_findFontByName(const char *fontName) {
   return NULL;
 }
 
-uint16_t driver_framebuffer_print(Window *window,
-                                  const char *str,
-                                  int16_t x0,
-                                  int16_t y0,
-                                  uint8_t xScale,
-                                  uint8_t yScale,
-                                  uint32_t color,
+uint16_t driver_framebuffer_print(Window *window, const char *str, int16_t x0, int16_t y0,
+                                  uint8_t xScale, uint8_t yScale, uint32_t color,
                                   const GFXfont *font) {
   // printf("\nPrint text %s with color %u\n", str, color);
   int16_t x = x0, y = y0;
@@ -180,14 +162,8 @@ uint16_t driver_framebuffer_print(Window *window,
   return y;
 }
 
-uint16_t driver_framebuffer_print_len(Window *window,
-                                      const char *str,
-                                      int16_t len,
-                                      int16_t x0,
-                                      int16_t y0,
-                                      uint8_t xScale,
-                                      uint8_t yScale,
-                                      uint32_t color,
+uint16_t driver_framebuffer_print_len(Window *window, const char *str, int16_t len, int16_t x0,
+                                      int16_t y0, uint8_t xScale, uint8_t yScale, uint32_t color,
                                       const GFXfont *font) {
   int16_t x = x0, y = y0;
   for (uint16_t i = 0; i < len; i++) {

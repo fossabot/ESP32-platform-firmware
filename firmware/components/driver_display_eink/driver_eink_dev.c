@@ -205,8 +205,7 @@ void driver_eink_dev_write_byte(uint8_t data) {
   driver_spi_send(&data, 1, HIGH);
 }
 
-void driver_eink_dev_write_command_stream(uint8_t command,
-                                          const uint8_t *data,
+void driver_eink_dev_write_command_stream(uint8_t command, const uint8_t *data,
                                           unsigned int datalen) {
   ESP_LOGI(TAG, "Sending SPI stream of %d bytes", datalen);
   driver_eink_dev_write_command(command);
@@ -231,8 +230,7 @@ static void memcpy_u8_u32(uint8_t *dst, const uint32_t *src, size_t size) {
 /* Send uint32_t stream in chunks of SPI_TRANSFER_SIZE
  * to use to the maximum the size of memory allocated in the SPI buffer
  */
-void driver_eink_dev_write_command_stream_u32(uint8_t command,
-                                              const uint32_t *data,
+void driver_eink_dev_write_command_stream_u32(uint8_t command, const uint32_t *data,
                                               unsigned int datalen) {
   assert(SPI_TRANSFER_SIZE % 4 == 0);
 
@@ -343,12 +341,10 @@ esp_err_t driver_eink_dev_init(enum driver_eink_dev_t dev_type) {
 
 void driver_eink_dev_write_byte(uint8_t data) {}
 
-void driver_eink_dev_write_command_stream(uint8_t command,
-                                          const uint8_t *data,
+void driver_eink_dev_write_command_stream(uint8_t command, const uint8_t *data,
                                           unsigned int datalen) {}
 
-void driver_eink_dev_write_command_stream_u32(uint8_t command,
-                                              const uint32_t *data,
+void driver_eink_dev_write_command_stream_u32(uint8_t command, const uint32_t *data,
                                               unsigned int datalen) {}
 
 #endif

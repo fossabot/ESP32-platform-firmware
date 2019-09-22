@@ -190,9 +190,7 @@ esp_err_t driver_i2c_write_buffer(uint8_t addr, const uint8_t *buffer, uint16_t 
   return res;
 }
 
-esp_err_t driver_i2c_write_buffer_reg(uint8_t addr,
-                                      uint8_t reg,
-                                      const uint8_t *buffer,
+esp_err_t driver_i2c_write_buffer_reg(uint8_t addr, uint8_t reg, const uint8_t *buffer,
                                       uint16_t len) {
   esp_err_t res;
   if (xSemaphoreTake(driver_i2c_mux, portMAX_DELAY) != pdTRUE)

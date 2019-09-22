@@ -187,10 +187,7 @@ esp_err_t driver_erc12864_write(const uint8_t *buffer) {
   return res;
 }
 
-esp_err_t driver_erc12864_write_part(const uint8_t *buffer,
-                                     int16_t x0,
-                                     int16_t y0,
-                                     int16_t x1,
+esp_err_t driver_erc12864_write_part(const uint8_t *buffer, int16_t x0, int16_t y0, int16_t x1,
                                      int16_t y1) {
   esp_err_t res = ESP_OK;
 

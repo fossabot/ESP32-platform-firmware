@@ -58,10 +58,7 @@ uint16_t driver_framebuffer_getWidth(Window *window);
 uint16_t driver_framebuffer_getHeight(Window *window);
 /* Get the height of the framebuffer or the provided window */
 
-esp_err_t driver_framebuffer_png(Window *window,
-                                 int16_t x,
-                                 int16_t y,
-                                 lib_reader_read_t reader,
+esp_err_t driver_framebuffer_png(Window *window, int16_t x, int16_t y, lib_reader_read_t reader,
                                  void *reader_p);
 
 #endif  //_DRIVER_FRAMEBUFFER_H_

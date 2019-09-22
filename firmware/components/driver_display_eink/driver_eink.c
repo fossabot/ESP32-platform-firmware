@@ -53,9 +53,7 @@ static void memset_u32(uint32_t *dst, uint32_t value, size_t size) {
   }
 }
 
-static void driver_eink_create_bitplane(const uint8_t *img,
-                                        uint32_t *buf,
-                                        int bit,
+static void driver_eink_create_bitplane(const uint8_t *img, uint32_t *buf, int bit,
                                         driver_eink_flags_t flags) {
 #ifdef CONFIG_EPD_ROTATED_180
   flags ^= DISPLAY_FLAG_ROTATE_180;
@@ -97,9 +95,7 @@ static void driver_eink_create_bitplane(const uint8_t *img,
   }
 }
 
-static void driver_eink_set_ram_area(uint8_t x_start,
-                                     uint8_t x_end,
-                                     uint16_t y_start,
+static void driver_eink_set_ram_area(uint8_t x_start, uint8_t x_end, uint16_t y_start,
                                      uint16_t y_end) {
   // set RAM X - address Start / End position
   driver_eink_dev_write_command_p2(0x44, x_start, x_end);
@@ -187,9 +183,7 @@ void driver_eink_update(const uint32_t *buf, const struct driver_eink_update *up
   driver_eink_have_oldbuf = true;
 }
 
-void driver_eink_display_part(const uint8_t *img,
-                              driver_eink_flags_t flags,
-                              uint16_t y_start,
+void driver_eink_display_part(const uint8_t *img, driver_eink_flags_t flags, uint16_t y_start,
                               uint16_t y_end) {
   int lut_mode = (flags >> DISPLAY_FLAG_LUT_BIT) & ((1 << DISPLAY_FLAG_LUT_SIZE) - 1);
 

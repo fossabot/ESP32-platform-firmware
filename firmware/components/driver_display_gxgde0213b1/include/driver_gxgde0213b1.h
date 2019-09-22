@@ -18,11 +18,8 @@ extern esp_err_t driver_gxgde0213b1_set_sleep(bool state);
 extern esp_err_t driver_gxgde0213b1_set_display(bool state);
 extern esp_err_t driver_gxgde0213b1_set_invert(bool state);
 extern esp_err_t driver_gxgde0213b1_write(const uint8_t *data);
-extern esp_err_t driver_gxgde0213b1_write_partial(const uint8_t *buffer,
-                                                  uint16_t x0,
-                                                  uint16_t y0,
-                                                  uint16_t x1,
-                                                  uint16_t y1);
+extern esp_err_t driver_gxgde0213b1_write_partial(const uint8_t *buffer, uint16_t x0, uint16_t y0,
+                                                  uint16_t x1, uint16_t y1);
 
 __END_DECLS
 

@@ -77,8 +77,7 @@ extern esp_err_t driver_mpr121_configure(const uint32_t *baseline, uint8_t press
  * @note It is safe to set the interrupt handler before a call to
  * driver_mpr121_init().
  */
-extern void driver_mpr121_set_interrupt_handler(uint8_t pin,
-                                                driver_mpr121_intr_t handler,
+extern void driver_mpr121_set_interrupt_handler(uint8_t pin, driver_mpr121_intr_t handler,
                                                 void *arg);
 
 /**

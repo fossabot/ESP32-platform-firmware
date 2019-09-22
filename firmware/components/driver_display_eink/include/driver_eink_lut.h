@@ -44,8 +44,7 @@ __BEGIN_DECLS
  * @return lut length. returns -1 on error.
  */
 extern int driver_eink_lut_generate(const struct driver_eink_lut_entry *list,
-                                    enum driver_eink_lut_flags flags,
-                                    uint8_t *lut);
+                                    enum driver_eink_lut_flags flags, uint8_t *lut);
 
 /* pre-defined lookup-table display-updates. */
 

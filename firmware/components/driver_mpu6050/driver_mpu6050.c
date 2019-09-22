@@ -45,13 +45,9 @@ esp_err_t driver_mpu6050_configure_accel_range(uint8_t afs_sel) {
   return res;
 }
 
-esp_err_t driver_mpu6050_interrupt_configure(bool int_level,
-                                             bool int_open,
-                                             bool latch_int_en,
-                                             bool int_rd_clear,
-                                             bool fsync_int_level,
-                                             bool fsync_int_en,
-                                             bool i2c_bypass_en) {
+esp_err_t driver_mpu6050_interrupt_configure(bool int_level, bool int_open, bool latch_int_en,
+                                             bool int_rd_clear, bool fsync_int_level,
+                                             bool fsync_int_en, bool i2c_bypass_en) {
   esp_err_t res = driver_mpu6050_init();
   if (res != ESP_OK)
     return res;
@@ -76,8 +72,7 @@ esp_err_t driver_mpu6050_interrupt_configure(bool int_level,
   return res;
 }
 
-esp_err_t driver_mpu6050_interrupt_enable(bool fifo_oflow_en,
-                                          bool i2c_mst_int_en,
+esp_err_t driver_mpu6050_interrupt_enable(bool fifo_oflow_en, bool i2c_mst_int_en,
                                           bool data_rdy_en) {
   esp_err_t res = driver_mpu6050_init();
   if (res != ESP_OK)
@@ -95,8 +90,7 @@ esp_err_t driver_mpu6050_interrupt_enable(bool fifo_oflow_en,
   return res;
 }
 
-esp_err_t driver_mpu6050_read_interrupt_status(bool *fifo_oflow_int,
-                                               bool *i2c_mst_int,
+esp_err_t driver_mpu6050_read_interrupt_status(bool *fifo_oflow_int, bool *i2c_mst_int,
                                                bool *data_rdy_int) {
   esp_err_t res = driver_mpu6050_init();
   if (res != ESP_OK)

@@ -456,9 +456,7 @@ esp_err_t driver_ili9341_write(const uint8_t *buffer) {
   return driver_ili9341_write_partial(buffer, 0, 0, ILI9341_WIDTH, ILI9341_HEIGHT);
 }
 
-esp_err_t driver_ili9341_write_partial_direct(const uint8_t *buffer,
-                                              uint16_t x0,
-                                              uint16_t y0,
+esp_err_t driver_ili9341_write_partial_direct(const uint8_t *buffer, uint16_t x0, uint16_t y0,
                                               uint16_t x1,
                                               uint16_t y1) {  // Without conversion
   if (x0 > x1)
@@ -474,9 +472,7 @@ esp_err_t driver_ili9341_write_partial_direct(const uint8_t *buffer,
   return res;
 }
 
-esp_err_t driver_ili9341_write_partial(const uint8_t *frameBuffer,
-                                       uint16_t x0,
-                                       uint16_t y0,
+esp_err_t driver_ili9341_write_partial(const uint8_t *frameBuffer, uint16_t x0, uint16_t y0,
                                        uint16_t x1,
                                        uint16_t y1) {  // With conversion from framebuffer
   esp_err_t res = ESP_OK;

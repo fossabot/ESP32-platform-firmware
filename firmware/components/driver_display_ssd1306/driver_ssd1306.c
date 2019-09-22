@@ -223,10 +223,7 @@ esp_err_t driver_ssd1306_init(void) {
   return ESP_OK;
 }
 
-esp_err_t driver_ssd1306_write_part(const uint8_t *buffer,
-                                    int16_t x0,
-                                    int16_t y0,
-                                    int16_t x1,
+esp_err_t driver_ssd1306_write_part(const uint8_t *buffer, int16_t x0, int16_t y0, int16_t x1,
                                     int16_t y1) {
   uint16_t addr0  = x0 * (SSD1306_HEIGHT / 8);
   uint16_t addr1  = x1 * (SSD1306_HEIGHT / 8) + (SSD1306_HEIGHT / 8);
